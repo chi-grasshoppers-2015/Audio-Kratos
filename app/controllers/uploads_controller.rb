@@ -14,7 +14,7 @@ class UploadsController < ApplicationController
     @resource = upload_resource
     obj = @resource.bucket('bytewayve').object(params[:file].original_filename)
 
-    obj.upload_file(params[:file].path, :acl => :public_read)
+    obj.upload_file(params[:file].path)
 
     # params[:file].original_filename)
 
@@ -46,11 +46,26 @@ class UploadsController < ApplicationController
     @upload = Upload.find(params[:id])
   end
 
+  def destroy
+
+    @upload = Upload.find(params[:id])
+
+    if (@upload)
+      s3 = upload_resource
+      s3.bucket('bytewayve').object(@upload.name).delete
+
+      @upload.destroy
+      redirect_to uploads_path
+    else
+      render :text => "No song was found to delete!"
+    end
+  end
+
 
   private
 
   def upload_resource
-    s3 = Aws::S3::Resource.new(region:'us-west-2')
+    Aws::S3::Resource.new(region:'us-west-2')
   end
 
   #  def upload_object(file_name, object_to_upload)
