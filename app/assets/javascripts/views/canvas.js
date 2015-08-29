@@ -63,13 +63,14 @@ Canvas.prototype = {
 
   drawRedBeats:
     function(audio){
+      var scale = this.canvas.height/255;
       this.drawCanvas('#000')
       var barWidth = (this.canvas.width / audio.frequencyCount) * 7;
       var barHeight;
-      var x = 0;
       var bars = 1000;
-      for(var i = 0; i < audio.frequencyCount; i++) {
-        barHeight = audio.binArray[i];
+      x = 0;
+      for(var i = 3; i < audio.frequencyCount; i++) {
+        barHeight = Math.floor(audio.binArray[i] * scale);
 
         this.ctx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
         this.ctx.fillRect(x,this.canvas.height-barHeight,barWidth,barHeight);
@@ -136,12 +137,17 @@ Canvas.prototype = {
 
     },
 
+    drawKit:
+      function(audio){
+
+      }
+
   drawList:
     function(audio){
       // this.drawMaximizer();
-      // this.drawRedBeats(audio)
+      this.drawRedBeats(audio);
       // this.drawCanoe(audio);
-      this.drawOsc(audio)
+      // this.drawOsc(audio)
 
   }
 }
