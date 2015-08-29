@@ -1,0 +1,10 @@
+<h1>Uploads#new</h1>
+<p>Find me in app/views/uploads/new.html.erb</p>
+<h1>Upload a song</h1>
+
+<%= form_tag songs_path, enctype: 'multipart/form-data' do %>
+  <%= file_field_tag :filename  %>
+  <%= submit_tag 'Upload song' %>
+<% end %>
+
+
