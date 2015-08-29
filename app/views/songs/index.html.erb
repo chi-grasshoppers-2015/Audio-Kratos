@@ -1,0 +1,20 @@
+<div class="viewer">
+</div>
+
+<h2>Listen to a MP3 with HTML5 Audio</h2>
+
+
+<h1>Upload</h1>
+<h1>Upload a file</h1>
+<%= form_tag songs_path, enctype: 'multipart/form-data' do %>
+  <%= file_field_tag :file  %>
+  <%= submit_tag 'Upload file' %>
+<% end %>
+
+<h1>All songs</h1>
+<% current_user.songs.each do |song| %>
+  <div>
+    <%= link_to song.filename, song.url, :class => "html5" %> -
+    <%= link_to "Delete", song, method: :delete, :confirm => 'Are you sure you want to delete ' + song.filename + '?' %>
+  </div>
+<% end %>

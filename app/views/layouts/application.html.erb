@@ -9,6 +9,19 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<header>
+  <nav>
+    <% if logged_in? %>
+      <span>Welcome, <%= current_user.first_name %>!</span>
+      <%= link_to "Profile", songs_path %>
+      <%= link_to "Sign out", logout_path, method: "delete" %>
+    <% else %>
+      <h2>ByteWayve</h2>
+      <h2><%= link_to "Log in", new_session_path  %></h2>
+    <% end %>
+
+  </nav>
+</header>
 
 <%= yield %>
 

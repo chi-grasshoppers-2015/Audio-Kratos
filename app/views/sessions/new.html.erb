@@ -1,0 +1,21 @@
+<h2>Log in</h2>
+<% if @user && @user.errors.any? %>
+
+  <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+
+<% end %>
+
+
+
+<%= form_for(:session, url: sessions_path) do |f| %>
+  <%= label_tag("Email") %><br>
+  <input type="email" name="user[email]"></input><br><br>
+
+  <%= label_tag("Password") %><br>
+  <input type="password" name="user[password]"></input><br><br>
+  <%= submit_tag("Sign in") %>
+<% end %>
