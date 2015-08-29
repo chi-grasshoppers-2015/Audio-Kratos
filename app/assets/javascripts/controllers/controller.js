@@ -8,7 +8,7 @@ Controller.prototype = {
       this.bindEvents();
       this.canvas = new Canvas(this.minimizeDimensions());
       this.audio = new AudioPlayer(url);
-      setInterval(this.conduct.bind(this))
+      setInterval(this.conduct.bind(this), 17)
     },
 
   bindEvents:
@@ -23,7 +23,12 @@ Controller.prototype = {
 
   resetCanvas:
     function(event){
-      this.canvas.update(this.minimizeDimensions());
+      if (this.canvas.maximize) {
+        this.canvas.update(this.maximizeDimensions());
+      }
+      else {
+        this.canvas.update(this.minimizeDimensions());
+      }
   },
 
   mouse:
@@ -66,7 +71,7 @@ Controller.prototype = {
   conduct:
     function(){
       this.audio.dataStream();
-      this.canvas.drawList(this.audio.binArray);
+      this.canvas.drawList(this.audio);
   }
 
 }

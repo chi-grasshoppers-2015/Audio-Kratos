@@ -6,10 +6,6 @@ var AudioPlayer = function(url){
     this.analyser = this.context.createAnalyser();
     this.source.connect(this.analyser)
     this.analyser.connect(this.context.destination);
-
-    // setInterval(this.dataStream.bind(this), 1);
-
-
 }
 
 
@@ -26,6 +22,8 @@ AudioPlayer.prototype = {
 
   dataStream:
     function(){
+      this.fftSize = 256;
+      this.frequencyCount = this.analyser.frequencyBinCount
       this.binArray = new Uint8Array(this.analyser.frequencyBinCount);
       this.freqData = this.analyser.getByteFrequencyData(this.binArray);
 
@@ -46,11 +44,8 @@ AudioPlayer.prototype = {
   decode:
     function( arrayBuffer ) {
       this.ac.decodeAudioData(arrayBuffer, function( audioBuffer ) {
-        // this.message.innerHTML = '';
         this.buffer = audioBuffer;
         console.log(this.buffer)
-        // this.draw();
-        // this.play();
       }.bind(this));
   }
 

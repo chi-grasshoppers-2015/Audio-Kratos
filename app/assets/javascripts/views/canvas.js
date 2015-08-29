@@ -23,8 +23,8 @@ Canvas.prototype = {
 
 
   drawCanvas:
-    function(){
-      this.ctx.fillStyle = "#000";
+    function(color){
+      this.ctx.fillStyle = color;
       this.ctx.fillRect(0,0, this.canvas.width, this.canvas.height);
 
   },
@@ -61,23 +61,44 @@ Canvas.prototype = {
       }
     },
 
-  drawBeats:
-    function(freqData){
+  drawRedBeats:
+    function(audio){
+      this.drawCanvas('#000')
+      var barWidth = (this.canvas.width / audio.frequencyCount) * 7;
+      var barHeight;
+      var x = 0;
       var bars = 1000;
-      for (var i = 0; i < bars; i++) {
-        var bar_x = i * 4;
-        var bar_width = 2;
-        var bar_height = -(freqData[i]);
-        this.ctx.fillRect(bar_x, this.canvas.height, bar_width, bar_height);
-      }
+      for(var i = 0; i < audio.frequencyCount; i++) {
+        barHeight = audio.binArray[i];
 
-  },
+        this.ctx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+        this.ctx.fillRect(x,this.canvas.height-barHeight,barWidth,barHeight);
+        x += barWidth + 1;
+      }
+    },
+
+  drawCanoe:
+    function(audio){
+      this.drawCanvas('#000')
+      var barWidth = (this.canvas.width / audio.frequencyCount) * 1.5;
+      var barHeight;
+      var x = 0;
+      var bars = 400;
+      for(var i = 0; i < audio.frequencyCount; i++) {
+        barHeight = audio.binArray[i];
+
+        this.ctx.fillStyle = '#18336d';
+        this.ctx.fillRect(x,this.canvas.height-barHeight/2,barWidth,barHeight);
+        this.ctx.fillRect(x,0,barWidth,barHeight);
+        x += barWidth + 0.5;
+      }
+    },
 
   drawList:
-    function(freqData){
-      this.drawCanvas();
-      this.drawMaximizer();
-      this.drawBeats(freqData);
+    function(audio){
+      // this.drawMaximizer();
+      // this.drawRedBeats(audio)
+      this.drawCanoe(audio);
 
   }
 }
