@@ -94,11 +94,54 @@ Canvas.prototype = {
       }
     },
 
+  drawOsc:
+    function(audio){
+        this.drawCanvas("#004737");
+        var quarterHeight = this.canvas.height/4;
+        var scaling = this.canvas.height/256
+
+        this.ctx.strokeStyle = "red";
+        this.ctx.lineWidth = 1;
+
+        this.ctx.beginPath();
+        this.ctx.moveTo(0,0);
+        this.ctx.lineTo(this.canvas.width,0);
+        this.ctx.stroke();
+        this.ctx.moveTo(0,this.canvas.height);
+        this.ctx.lineTo(this.canvas.width,this.canvas.height);
+        this.ctx.stroke();
+        this.ctx.save();
+        this.ctx.strokeStyle = "#006644";
+        this.ctx.beginPath();
+        if (this.ctx.setLineDash){
+          this.ctx.setLineDash([5]);
+          this.ctx.moveTo(0,quarterHeight);
+          this.ctx.lineTo(this.canvas.width,quarterHeight);
+          this.ctx.stroke();
+          this.ctx.moveTo(0,quarterHeight*3);
+          this.ctx.lineTo(this.canvas.width,quarterHeight*3);
+          this.ctx.stroke();
+
+          this.ctx.restore();
+          this.ctx.beginPath();
+          this.ctx.strokeStyle = "blue";
+          this.ctx.moveTo(0,quarterHeight*2);
+          this.ctx.lineTo(this.canvas.width,quarterHeight*2);
+          this.ctx.stroke();
+
+          this.ctx.strokeStyle = "white";
+
+          this.ctx.beginPath();
+        }
+
+    },
+
   drawList:
     function(audio){
       // this.drawMaximizer();
       // this.drawRedBeats(audio)
-      this.drawCanoe(audio);
+      // this.drawCanoe(audio);
+      this.drawOsc(audio)
 
   }
 }
