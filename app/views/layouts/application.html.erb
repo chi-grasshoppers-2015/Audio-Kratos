@@ -18,13 +18,14 @@
 $(document).ready(function() {
     // var audioSection = $('section#audio');
     $('a.html5').click(function() {
+      var url = $(this).attr('href');
+
       controller = new Controller();
-      controller.init();
+      controller.init(url);
         // var audio = $('<audio>', {
         //      controls : 'controls'
         // });
 
-        var url = $(this).attr('href');
         // $('<source>').attr('src', url).appendTo(audio);
         // audioSection.html(audio);
 
