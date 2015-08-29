@@ -5,11 +5,35 @@
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" %>
   <%= javascript_include_tag 'application' %>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
 
 <%= yield %>
+
+
+
+<script>
+$(document).ready(function() {
+    // var audioSection = $('section#audio');
+    $('a.html5').click(function() {
+      controller = new Controller();
+      controller.init();
+        // var audio = $('<audio>', {
+        //      controls : 'controls'
+        // });
+
+        var url = $(this).attr('href');
+        // $('<source>').attr('src', url).appendTo(audio);
+        // audioSection.html(audio);
+
+
+
+        return false;
+    });
+});
+</script>
 
 </body>
 </html>
