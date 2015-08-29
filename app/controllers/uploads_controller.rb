@@ -14,7 +14,7 @@ class UploadsController < ApplicationController
     @resource = upload_resource
     obj = @resource.bucket('bytewayve').object(params[:file].original_filename)
 
-    obj.upload_file(params[:file].path)
+    obj.upload_file(params[:file].path, acl: "public-read")
 
     # params[:file].original_filename)
 
@@ -59,6 +59,7 @@ class UploadsController < ApplicationController
     else
       render :text => "No song was found to delete!"
     end
+
   end
 
 
