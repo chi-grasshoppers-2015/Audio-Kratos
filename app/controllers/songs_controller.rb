@@ -1,4 +1,3 @@
-require 'taglib'
 class SongsController < ApplicationController
 
   def index
