@@ -1,8 +1,6 @@
-class UploadsController < ApplicationController
+class SongsController < ApplicationController
 
   def index
-    @uploads = Upload.all
-    @buckets = buckets
   end
 
   def new
@@ -28,14 +26,14 @@ class UploadsController < ApplicationController
     # )
 
     # Create an object for the upload
-    @upload = Upload.new(
+    @song = Song.new(
       url: obj.public_url,
-      name: obj.key
+      filename: obj.key
     )
 
     # Save the upload
-    if @upload.save
-      redirect_to uploads_path, success: 'File successfully uploaded'
+    if @song.save
+      redirect_to songs_path, success: 'File successfully uploaded'
     else
       flash.now[:notice] = 'There was an error'
       render :new
@@ -43,19 +41,16 @@ class UploadsController < ApplicationController
   end
 
   def show
-    @upload = Upload.find(params[:id])
+    @song = Song.find(params[:id])
   end
 
   def destroy
 
-    @upload = Upload.find(params[:id])
+    @song = Song.find(params[:id])
 
-    if (@upload)
-      s3 = upload_resource
-      s3.bucket('bytewayve').object(@upload.name).delete
-
-      @upload.destroy
-      redirect_to uploads_path
+    if (@song)
+      @song.destroy_both
+      redirect_to songs_path
     else
       render :text => "No song was found to delete!"
     end
@@ -68,12 +63,6 @@ class UploadsController < ApplicationController
   def upload_resource
     Aws::S3::Resource.new(region:'us-west-2')
   end
-
-  #  def upload_object(file_name, object_to_upload)
-         #   s3 = rails ::Resource.new(region:'us-west-2')
-         #   obj = s3.bucket('bucket-name').object(file_name)
-         #   obj.upload_file(object_to_upload)
-         # end
 
   def buckets
     s3 = Aws::S3::Client.new
