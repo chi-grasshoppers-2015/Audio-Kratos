@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20150829172547) do
   create_table "songs", force: :cascade do |t|
     t.string   "url",        null: false
     t.string   "filename",   null: false
-    t.string   "artist",     null: false
-    t.string   "album",      null: false
-    t.string   "song_name",  null: false
+    t.string   "artist"
+    t.string   "album"
+    t.string   "song_name"
     t.integer  "owner_id",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
