@@ -140,7 +140,7 @@ Canvas.prototype = {
     drawKit:
       function(audio){
 
-      }
+      },
 
   drawList:
     function(audio){
