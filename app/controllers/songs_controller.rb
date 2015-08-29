@@ -1,3 +1,4 @@
+require 'taglib'
 class SongsController < ApplicationController
 
   def index
@@ -10,25 +11,16 @@ class SongsController < ApplicationController
 
     @bucket = bucket
     @resource = upload_resource
+
+    # Upload the song
     obj = @resource.bucket('bytewayve').object(params[:file].original_filename)
-
     obj.upload_file(params[:file].path, acl: "public-read")
-
-    # params[:file].original_filename)
-
-    # Make an object in your bucket for your upload
-    # obj = S3_BUCKET.objects[params[:file].original_filename]
-
-    # Upload the file
-    # obj.write(
-    #   file: params[:file],
-    #   acl: :public_read
-    # )
 
     # Create an object for the upload
     @song = Song.new(
       url: obj.public_url,
-      filename: obj.key
+      filename: obj.key,
+      owner_id: current_user.id
     )
 
     # Save the upload

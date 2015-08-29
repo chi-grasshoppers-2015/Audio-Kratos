@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
+  root 'users#new'
+  delete 'logout' => 'sessions#destroy'
   resources :songs
   resources :users
-
-  root to: 'songs#index'
+  resources :sessions, only: [:new, :create]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
