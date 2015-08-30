@@ -25,29 +25,5 @@
 
 <%= yield %>
 
-
-
-<script>
-$(document).ready(function() {
-    // var audioSection = $('section#audio');
-    $('a.html5').click(function() {
-      var url = $(this).attr('href');
-
-      controller = new Controller();
-      controller.init(url);
-        // var audio = $('<audio>', {
-        //      controls : 'controls'
-        // });
-
-        // $('<source>').attr('src', url).appendTo(audio);
-        // audioSection.html(audio);
-
-
-
-        return false;
-    });
-});
-</script>
-
 </body>
 </html>

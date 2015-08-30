@@ -1,24 +1,28 @@
 var Controller = function (){
-
+  this.canvas = new Canvas(this.minimizeDimensions());
 };
 
 Controller.prototype = {
   init:
-    function(url) {
+    function() {
       this.bindEvents();
-      this.canvas = new Canvas(this.minimizeDimensions());
-      this.audio = new AudioPlayer(url);
+      this.audio = new AudioPlayer();
       setInterval(this.conduct.bind(this), 17)
     },
 
+  addAudioSrc:
+    function(url) {
+      this.audio.init(url);
+  },
+
   bindEvents:
     function(){
-      window.addEventListener('resize', this.resetCanvas.bind(this))
+      window.addEventListener('resize', this.resetCanvas.bind(this));
       // window.addEventListener('orientationchange', this.resetCanvas.bind(this))
-      $(document).on('mousemove', this.mouse)
-      $(document).on('click', "canvas", this.handleEnd.bind(this))
-      $(document).on('touchstart', "canvas", this.handleStart.bind(this))
-      $(document).on('touchend', "canvas", this.handleEnd.bind(this))
+      $(document).on('mousemove', this.mouse);
+      $(document).on('click', "canvas", this.handleEnd.bind(this));
+      $(document).on('touchstart', "canvas", this.handleStart.bind(this));
+      $(document).on('touchend', "canvas", this.handleEnd.bind(this));
   },
 
   resetCanvas:

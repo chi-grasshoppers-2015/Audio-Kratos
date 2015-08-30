@@ -8,11 +8,17 @@ Canvas.prototype = {
 
   update:
     function(dimensions){
-      console.log("touch")
       this.canvas = document.createElement("canvas");
+      // canvas = $('.viewer canvas')
+
       this.canvas.setAttribute('width', dimensions.width);
       this.canvas.setAttribute('height', dimensions.height);
+      // canvas.css("width", dimensions.width);
+      // canvas.css("height", dimensions.height);
+
       this.ctx = this.canvas.getContext('2d');
+      // canvas.getContext('2d');
+
       this.addCanvas();
   },
 
@@ -20,7 +26,6 @@ Canvas.prototype = {
     function(){
       $(".viewer").html(this.canvas)
   },
-
 
   drawCanvas:
     function(color){
@@ -137,8 +142,8 @@ Canvas.prototype = {
   drawList:
     function(audio){
       // this.drawRedBeats(audio);
-      // this.drawCanoe(audio);
-      this.drawOsc(audio);
+      this.drawCanoe(audio);
+      // this.drawOsc(audio);
 
   }
 }
