@@ -1,8 +1,13 @@
-<div class="viewer">
+<div class="player">
+  <div class="viewer">
+
+  </div>
+  <div class="controls">
+    <audio controls="controls"></audio>
+  </div>
 </div>
 
 <h2>Listen to a MP3 with HTML5 Audio</h2>
-
 
 <h1>Upload</h1>
 <h1>Upload a file</h1>
@@ -12,9 +17,36 @@
 <% end %>
 
 <h1>All songs</h1>
-<% current_user.songs.each do |song| %>
+<% current_user.songs.each_with_index do |song,i| %>
   <div>
-    <%= link_to song.original_filename, song.s3_url, :class => "html5" %> -
+    <%= link_to song.original_filename, song.s3_url, :class => "html5", :data => {index: i} %> -
     <%= link_to "Delete", song, method: :delete, :confirm => 'Are you sure you want to delete ' + song.original_filename + '?' %>
   </div>
 <% end %>
+
+<script>
+$(document).ready(function() {
+    controller = new Controller();
+    controller.init();
+
+    $('a.html5').click(function() {
+
+      var currentSong = $(this);
+      var url = currentSong.attr('href');
+      var index = currentSong.attr('data-index');
+
+      controller.addAudioSrc(url);
+
+      $('audio').on('ended', function(){
+        console.log("made it into audio ended")
+        $("a[data-index="+(parseInt(index)+1)+"]").click();
+        $("audio").trigger("play");
+      })
+
+      return false;
+    });
+
+    $('a.html5').first().click();
+
+});
+</script>

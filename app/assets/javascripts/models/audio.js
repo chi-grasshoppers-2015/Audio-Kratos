@@ -1,11 +1,5 @@
 var AudioPlayer = function(url){
-    this.init(url);
-    document.body.appendChild(this.audio);
-    this.context = new AudioContext();
-    this.source = this.context.createMediaElementSource(this.audio);
-    this.analyser = this.context.createAnalyser();
-    this.source.connect(this.analyser)
-    this.analyser.connect(this.context.destination);
+    // document.body.appendChild(this.audio);
 }
 
 
@@ -13,10 +7,16 @@ AudioPlayer.prototype = {
   init:
     function(url){
       this.audio = new Audio();
-      this.audio.src = url;
       this.audio.crossOrigin = "anonymous";
       this.audio.controls = true;
       this.audio.autoplay = false;
+      this.audio.src = url;
+      $('.controls').html(this.audio);
+      this.context = new AudioContext();
+      this.source = this.context.createMediaElementSource(this.audio);
+      this.analyser = this.context.createAnalyser();
+      this.source.connect(this.analyser)
+      this.analyser.connect(this.context.destination);
 
   },
 
