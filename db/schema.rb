@@ -17,14 +17,16 @@ ActiveRecord::Schema.define(version: 20150829172547) do
   enable_extension "plpgsql"
 
   create_table "songs", force: :cascade do |t|
-    t.string   "url",        null: false
-    t.string   "filename",   null: false
+    t.string   "original_filepath", null: false
+    t.string   "original_filename", null: false
+    t.string   "s3_url",            null: false
+    t.string   "s3_filename",       null: false
     t.string   "artist"
     t.string   "album"
     t.string   "song_name"
-    t.integer  "owner_id",   null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "owner_id",          null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: :cascade do |t|
