@@ -17,12 +17,34 @@
 <% end %>
 
 <h1>All songs</h1>
-<% current_user.songs.each_with_index do |song,i| %>
-  <div>
-    <%= link_to song.original_filename, song.s3_url, :class => "html5", :data => {index: i} %> -
-    <%= link_to "Delete", song, method: :delete, :confirm => 'Are you sure you want to delete ' + song.original_filename + '?' %>
-  </div>
-<% end %>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Song</th>
+      <th>Artist</th>
+      <th>Album</th>
+      <th>Track No.</th>
+      <th>Genre</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% current_user.songs.each_with_index do |song,i| %>
+    <tr>
+      <td><%= i %></td>
+      <td><%= link_to song.title, song.s3_url, :class => "html5", :data => {index: i} %></td>
+      <td><%= song.artist %></td>
+      <td><%= song.album %></td>
+      <td><%= song.track %></td>
+      <td><%= song.genre %></td>
+      <td><%= link_to "Delete", song, method: :delete, :confirm => 'Are you sure you want to delete ' + song.original_filename + '?' %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
 
 <script>
 $(document).ready(function() {
