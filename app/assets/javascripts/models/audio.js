@@ -22,9 +22,10 @@ AudioPlayer.prototype = {
 
   dataStream:
     function(){
-      this.fftSize = 256;
+      this.analyser.fftSize = 2048;
       this.frequencyCount = this.analyser.frequencyBinCount
       this.binArray = new Uint8Array(this.analyser.frequencyBinCount);
+      this.byteTime = this.analyser.getByteTimeDomainData(this.binArray);
       this.freqData = this.analyser.getByteFrequencyData(this.binArray);
 
   },
