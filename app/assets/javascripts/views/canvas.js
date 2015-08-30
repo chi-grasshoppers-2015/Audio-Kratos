@@ -29,38 +29,6 @@ Canvas.prototype = {
 
   },
 
-  drawMaximizer:
-    function(){
-      var x1 = this.canvas.width - 50
-      var y1 = this.canvas.height - 50
-      var x2 = this.canvas.width - 20
-      var y2 = this.canvas.height - 20
-      this.ctx.fillStyle = "white";
-      this.ctx.fillRect( x1, y1, 5, 20)
-      this.ctx.fillRect( x1, y1, 20, 5)
-      this.ctx.fillRect( x2, y2, -5, -20)
-      this.ctx.fillRect( x2, y2, -20, -5)
-    },
-
-  withinMaximizer:
-    function(touchCoord){
-      console.log(touchCoord)
-      xmin = this.canvas.width - 50;
-      ymin = this.canvas.height - 50;
-      xmax = this.canvas.width - 20;
-      ymax = this.canvas.height - 20;
-      console.log(xmin, ymin, xmax, ymax)
-
-      if( touchCoord.x >= xmin &&
-          touchCoord.x <= xmax &&
-          touchCoord.y >= ymin &&
-          touchCoord.y <= ymax)
-        return true
-      else {
-        return false
-      }
-    },
-
   drawRedBeats:
     function(audio){
       var scale = this.canvas.height/255;
@@ -81,12 +49,13 @@ Canvas.prototype = {
   drawCanoe:
     function(audio){
       this.drawCanvas('#000')
+      var scale = this.canvas.height/255;
       var barWidth = (this.canvas.width / audio.frequencyCount) * 1.5;
       var barHeight;
       var x = 0;
       var bars = 400;
       for(var i = 0; i < audio.frequencyCount; i++) {
-        barHeight = audio.binArray[i];
+        barHeight = audio.binArray[i] * scale;
 
         this.ctx.fillStyle = '#18336d';
         this.ctx.fillRect(x,this.canvas.height-barHeight/2,barWidth,barHeight);
@@ -97,43 +66,66 @@ Canvas.prototype = {
 
   drawOsc:
     function(audio){
-        this.drawCanvas("#004737");
-        var quarterHeight = this.canvas.height/4;
-        var scaling = this.canvas.height/256
+      this.drawCanvas("#004737");
+      var quarterHeight = this.canvas.height/4;
+      this.ctx.strokeStyle = "red";
+      this.ctx.lineWidth = 1;
 
-        this.ctx.strokeStyle = "red";
-        this.ctx.lineWidth = 1;
+      this.ctx.beginPath();
+      this.ctx.moveTo(0,0);
+      this.ctx.lineTo(this.canvas.width,0);
+      this.ctx.stroke();
+      this.ctx.moveTo(0,this.canvas.height);
+      this.ctx.lineTo(this.canvas.width,this.canvas.height);
+      this.ctx.stroke();
+      this.ctx.save();
+      this.ctx.strokeStyle = "#006644";
+      this.ctx.beginPath();
+      this.ctx.setLineDash([5]);
+      this.ctx.moveTo(0,quarterHeight);
+      this.ctx.lineTo(this.canvas.width,quarterHeight);
+      this.ctx.stroke();
+      this.ctx.moveTo(0,quarterHeight*3);
+      this.ctx.lineTo(this.canvas.width,quarterHeight*3);
+      this.ctx.stroke();
 
-        this.ctx.beginPath();
-        this.ctx.moveTo(0,0);
-        this.ctx.lineTo(this.canvas.width,0);
-        this.ctx.stroke();
-        this.ctx.moveTo(0,this.canvas.height);
-        this.ctx.lineTo(this.canvas.width,this.canvas.height);
-        this.ctx.stroke();
-        this.ctx.save();
-        this.ctx.strokeStyle = "#006644";
-        this.ctx.beginPath();
-        if (this.ctx.setLineDash){
-          this.ctx.setLineDash([5]);
-          this.ctx.moveTo(0,quarterHeight);
-          this.ctx.lineTo(this.canvas.width,quarterHeight);
-          this.ctx.stroke();
-          this.ctx.moveTo(0,quarterHeight*3);
-          this.ctx.lineTo(this.canvas.width,quarterHeight*3);
-          this.ctx.stroke();
+      this.ctx.restore();
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = "orange";
+      this.ctx.moveTo(0,quarterHeight*2);
+      this.ctx.lineTo(this.canvas.width,quarterHeight*2);
+      this.ctx.stroke();
 
-          this.ctx.restore();
-          this.ctx.beginPath();
-          this.ctx.strokeStyle = "blue";
-          this.ctx.moveTo(0,quarterHeight*2);
-          this.ctx.lineTo(this.canvas.width,quarterHeight*2);
-          this.ctx.stroke();
+      this.ctx.strokeStyle = "white";
+      if (audio.analyser) {
+        audio.analyser.getByteTimeDomainData(audio.binArray);
+      }
 
-          this.ctx.strokeStyle = "white";
+      this.ctx.beginPath();
+      this.ctx.lineWidth = 2
 
-          this.ctx.beginPath();
+      var sliceWidth = this.canvas.width * 1.0 / audio.frequencyCount;
+      var x = 0;
+
+      if (!audio.frequencyCount) {
+        this.ctx.moveTo(0, this.height/2);
+      }
+
+      for (var i = 0; i < audio.frequencyCount; i++) {
+        var v = audio.binArray[i] / 128.0;
+        var y = v * (this.canvas.height/2);
+
+        if (i === 0) {
+          this.ctx.moveTo(x, y);
+        } else {
+          this.ctx.lineTo(x, y);
         }
+
+        x += sliceWidth;
+      }
+
+      this.ctx.lineTo(this.canvas.width, this.canvas.height/2);
+      this.ctx.stroke();
 
     },
 
@@ -144,10 +136,9 @@ Canvas.prototype = {
 
   drawList:
     function(audio){
-      // this.drawMaximizer();
-      this.drawRedBeats(audio);
+      // this.drawRedBeats(audio);
       // this.drawCanoe(audio);
-      // this.drawOsc(audio)
+      this.drawOsc(audio);
 
   }
 }
