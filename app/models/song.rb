@@ -1,3 +1,5 @@
+require 'taglib'
+
 class Song < ActiveRecord::Base
   belongs_to :owner, class_name: "User"
 
@@ -23,9 +25,7 @@ class Song < ActiveRecord::Base
   private
 
   def create_token(input)
-    hash = Digest::SHA1.hexdigest(input)
-    salt = Digest::SHA1.hexdigest(Time.now.to_s)
-    Digest::SHA1.hexdigest(hash + salt)
+    Digest::SHA1.hexdigest(input + Time.now.to_s)
   end
 
   def upload_resource

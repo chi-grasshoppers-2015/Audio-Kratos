@@ -23,7 +23,10 @@ ActiveRecord::Schema.define(version: 20150829172547) do
     t.string   "s3_filename",       null: false
     t.string   "artist"
     t.string   "album"
-    t.string   "song_name"
+    t.integer  "track"
+    t.string   "title"
+    t.string   "genre"
+    t.integer  "release_year"
     t.integer  "owner_id",          null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
