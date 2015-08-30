@@ -1,6 +1,11 @@
 class Song < ActiveRecord::Base
   belongs_to :owner, class_name: "User"
 
+
+
+
+
+
   def destroy_both
     self.destroy_s3
     self.destroy

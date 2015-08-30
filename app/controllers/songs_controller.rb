@@ -11,9 +11,16 @@ class SongsController < ApplicationController
     @bucket = bucket
     @resource = upload_resource
 
+
+
+
     # Upload the song
     obj = @resource.bucket('bytewayve').object(params[:file].original_filename)
     obj.upload_file(params[:file].path, acl: "public-read")
+
+    puts
+
+
 
     # Create an object for the upload
     @song = Song.new(
