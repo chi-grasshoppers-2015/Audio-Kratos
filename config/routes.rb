@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :songs
   resources :users
   resources :sessions, only: [:new, :create]
+  resources :playlists, only: [:index, :show]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

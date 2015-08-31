@@ -1,4 +1,4 @@
-<!-- <div class="player">
+<div class="player">
   <div class="viewer">
   </div>
   <div class="controls">
@@ -6,14 +6,7 @@
   </div>
 </div>
 
- -->
-<h1>Upload a file</h1>
-<%= form_tag songs_path, enctype: 'multipart/form-data' do %>
-  <%= file_field_tag :file  %>
-  <%= submit_tag 'Upload file' %>
-<% end %>
-
-<h1>All songs</h1>
+<h1><%= @playlist.name %> playlist</h1>
 <table class="pretty">
   <thead>
     <tr>
@@ -43,29 +36,31 @@
 </table>
 
 
+
+
 <script>
-$(document).ready(function() {
-    controller = new Controller();
-    controller.init();
+  $(document).ready(function() {
+      controller = new Controller();
+      controller.init();
 
-    $('a.html5').click(function() {
+      $('a.html5').click(function() {
 
-      var currentSong = $(this);
-      var url = currentSong.attr('href');
-      var index = currentSong.attr('data-index');
+        var currentSong = $(this);
+        var url = currentSong.attr('href');
+        var index = currentSong.attr('data-index');
 
-      controller.addAudioSrc(url);
+        controller.addAudioSrc(url);
 
-      $('audio').on('ended', function(){
-        console.log("made it into audio ended")
-        $("a[data-index="+(parseInt(index)+1)+"]").click();
-        $("audio").trigger("play");
-      })
+        $('audio').on('ended', function(){
+          console.log("made it into audio ended")
+          $("a[data-index="+(parseInt(index)+1)+"]").click();
+          $("audio").trigger("play");
+        })
 
-      return false;
-    });
+        return false;
+      });
 
-    $('a.html5').first().click();
+      $('a.html5').first().click();
 
-});
+  });
 </script>

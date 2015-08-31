@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   def create
     @user = User.create(user_params)
     if @user.valid?
+      @user.playlists.create(name: "All songs")
       session[:user_id] = @user.id
       redirect_to songs_path
     else

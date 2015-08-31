@@ -13,7 +13,8 @@
   <nav>
     <% if logged_in? %>
       <span>Welcome, <%= current_user.first_name %>!</span>
-      <%= link_to "Profile", songs_path %>
+      <%= link_to "Songs Library", songs_path %>
+      <%= link_to "Playlists", playlists_path %>
       <%= link_to "Sign out", logout_path, method: "delete" %>
     <% else %>
       <h2>ByteWayve</h2>
