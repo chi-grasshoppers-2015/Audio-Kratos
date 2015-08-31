@@ -14,77 +14,42 @@
 
  <div class="col-md-12 mt">
     <div class="content-panel">
-      <table class="table table-hover">
+      <table class="table table-hover playlist-table">
         <h4><%= @playlist.name %></h4>
           <hr>
             <thead>
               <tr>
                 <th>#</th>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Track</th>
-                <th>Genre</th>
+                <th><%= sortable "title" %></th>
+                <th><%= sortable "artist" %></th>
+                <th><%= sortable "album" %></th>
+                <th><%= sortable "track" %></th>
+                <th><%= sortable "genre" %></th>
               </tr>
             </thead>
             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Simon</td>
-                                    <td>Mosa</td>
-                                    <td>@twitter</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-        </div>
+              <% @songs.each_with_index do |song,i| %>
+                 <tr>
+                  <td><%= i %></td>
+                  <td class="title"><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
+                  <td class="artist"><%= song.artist %></td>
+                  <td class="album"><%= song.album %></td>
+                  <td class="track"><%= song.track %></td>
+                  <td class="genre"><%= song.genre %></td>
+                  <td>holder</td>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+    </div>
+   </div>
+  </div>
 
 
 
 
 
 
-<h1><%= @playlist.name %> playlist</h1>
-<table class="pretty">
-  <thead>
-    <tr>
-      <th></th>
-      <th><%= sortable "title" %></th>
-      <th><%= sortable "artist" %></th>
-      <th><%= sortable "album" %></th>
-      <th><%= sortable "track" %></th>
-      <th><%= sortable "genre" %></th>
-      <th>Remove from playlist holder</th>
-    </tr>
-  </thead>
-
-  <tbody>
-  <% @songs.each_with_index do |song,i| %>
-     <tr>
-      <td><%= i %></td>
-      <td class="title"><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
-      <td class="artist"><%= song.artist %></td>
-      <td class="album"><%= song.album %></td>
-      <td class="track"><%= song.track %></td>
-      <td class="genre"><%= song.genre %></td>
-      <td>holder</td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
 
 <script>
   $(document).ready(function() {

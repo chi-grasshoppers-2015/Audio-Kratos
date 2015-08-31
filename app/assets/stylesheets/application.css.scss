@@ -11,6 +11,10 @@
  * file per style scope.
  *
  *= require_tree .
+*= require jquery-ui/draggable
+ *= require jquery-ui/resizable
+ *= require jquery-ui/selectable
+ *= require jquery-ui/sortable
  *= require_tree ../../../vendor/assets/stylesheets/.
  *= require_self
  */
