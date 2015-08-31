@@ -141,9 +141,9 @@ Canvas.prototype = {
 
   drawList:
     function(audio){
-      this.drawRedBeats(audio);
+      // this.drawRedBeats(audio);
       // this.drawCanoe(audio);
-      // this.drawOsc(audio);
+      this.drawOsc(audio);
 
   }
 }
