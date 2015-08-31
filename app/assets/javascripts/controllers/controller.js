@@ -9,24 +9,27 @@ Controller.prototype = {
       this.audio = new AudioPlayer();
       this.playlist = new Playlist();
       setInterval(this.conduct.bind(this), 17)
+      $('a.song-link').first().click();
     },
 
   bindEvents:
     function(){
       window.addEventListener('resize', this.resetCanvas.bind(this));
       // window.addEventListener('orientationchange', this.resetCanvas.bind(this))
+
       $(document).on('mousemove', this.mouse);
       $(document).on('click', "canvas", this.handleEnd.bind(this));
       $(document).on('touchstart', "canvas", this.handleStart.bind(this));
       $(document).on('touchend', "canvas", this.handleEnd.bind(this));
-      $(document).on('click', 'a.song-link', this.setSong.bind(this));
+      $(document).on('click', 'a.song-link', this.updateSong.bind(this));
       $(document).on('ended', 'audio', this.nextSong);
   },
 
-  setSong:
+  updateSong:
     function(event){
-      var url = this.playlist.getURL(event);
-      this.addAudioSrc(url)
+
+      this.playlist.changeSong(event);
+      this.addAudioSrc(this.playlist.currentURL);
   },
 
   // nextSong:
