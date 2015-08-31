@@ -29,6 +29,10 @@ a, a:hover, a:focus {
     color: #fff;
 }
 
+.viewer{
+  text-align: center;
+}
+
 #container {
     width: 100%;
     height: 100%;
