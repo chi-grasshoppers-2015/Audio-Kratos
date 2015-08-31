@@ -21,7 +21,8 @@ Controller.prototype = {
       $(document).on('mousemove', this.mouse);
       $(document).on('click', "canvas", this.handleEnd.bind(this));
       $(document).on('touchstart', "canvas", this.handleStart.bind(this));
-      $(document).on('touchend', "canvas", this.handleEnd.bind(this));
+      $(document).on('touchend', "canvas", this.handleEsc.bind(this));
+      $(document).on('keyup', this.handleEnd.bind(this))
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
       document.addEventListener('ended', this.nextSong.bind(this), true);
   },
@@ -100,14 +101,22 @@ Controller.prototype = {
 
   handleEnd:
     function(event){
-      this.canvas.touch = false;
       if (this.canvas.maximize) {
         this.canvas.maximize = false;
+        document.webkitExitFullscreen();
         this.canvas.update(this.minimizeDimensions())
       }
       else {
         this.canvas.maximize = true;
+        $(".viewer").get(0).webkitRequestFullscreen();
         this.canvas.update(this.maximizeDimensions())
+      }
+  },
+
+  handleEsc:
+    function(event){
+      if(event.keyCode == 27) {
+        this.handleEnd
       }
   },
 

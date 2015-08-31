@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 /* Import fonts */
 @import url(http://fonts.googleapis.com/css?family=Ruda:400,700,900);
 
@@ -6,6 +11,7 @@
 html {
   background-color: #dfdfe5;
 }
+
 body {
     color: #797979;
   background: #f2f2f2;
@@ -33,7 +39,9 @@ a, a:hover, a:focus {
     color: #fff;
 }
 
-.viewer{
+
+.viewer {
+
   text-align: center;
 }
 
@@ -404,6 +412,7 @@ ul.sidebar-menu li a.active i {
 }
 
 .header {
+
     position: fixed;
     left: 0;
     right: 0;
@@ -2241,3 +2250,11 @@ label {
     min-height: 900px;
 }
 
+table, td, th {
+    border-left: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+    table-layout:fixed;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
