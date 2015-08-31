@@ -10,6 +10,7 @@ Controller.prototype = {
       this.playlist = new Playlist();
       setInterval(this.conduct.bind(this), 17)
       $('a.song-link').first().click();
+      $("audio").trigger("pause");
     },
 
   bindEvents:
@@ -22,22 +23,22 @@ Controller.prototype = {
       $(document).on('touchstart', "canvas", this.handleStart.bind(this));
       $(document).on('touchend', "canvas", this.handleEnd.bind(this));
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
-      $(document).on('ended', 'audio', this.nextSong);
+      document.addEventListener('ended', this.nextSong.bind(this), true);
   },
 
   updateSong:
     function(event){
-
       this.playlist.changeSong(event);
       this.addAudioSrc(this.playlist.currentURL);
+      $("audio").trigger("play");
   },
 
-  // nextSong:
-  //   function(){
-  //     console.log("made it into audio ended");
-  //     $("a[data-index="+(parseInt(index)+1)+"]").click();
-  //     $("audio").trigger("play");
-  // },
+  nextSong:
+    function(event){
+      console.log("made it into audio ended");
+      $("a[data-index="+(parseInt(this.playlist.currentIndex)+1)+"]").click();
+      $("audio").trigger("play");
+  },
 
   addAudioSrc:
     function(url) {

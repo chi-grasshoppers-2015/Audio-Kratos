@@ -36,6 +36,7 @@ Playlist.prototype = {
       this.currentGenre = row.find('.genre').html();
 
       console.log(this.currentAlbum);
+      console.log(this.currentIndex);
   },
 
   // getURL:
