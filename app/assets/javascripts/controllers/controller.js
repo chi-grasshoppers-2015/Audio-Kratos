@@ -52,7 +52,7 @@ Controller.prototype = {
   nextSong:
     function(event){
       console.log("made it into audio ended");
-      $("a[data-index="+(parseInt(this.playlist.currentIndex)+1)+"]").click();
+      $("a[data-index="+(parseInt(this.playlist.currentSongIndex)+1)+"]").click();
       $("audio").trigger("play");
   },
 

@@ -16,7 +16,11 @@ Playlist.prototype = {
   createSong:
     function(url, title, artist, album, track, genre){
       song = Song.new(url, title, artist, album, track, genre);
+  },
 
+  currentSongIndex:
+    function(){
+      return this.songs.indexOf(this.currentSong)
   },
 
   chooseSong:
@@ -26,7 +30,6 @@ Playlist.prototype = {
 
   findNextSong:
     function(){
-
   },
 
   changeSong:
