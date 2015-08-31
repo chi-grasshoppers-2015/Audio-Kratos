@@ -1,12 +1,3 @@
-<!-- <div class="player">
-  <div class="viewer">
-  </div>
-  <div class="controls">
-    <audio controls="controls"></audio>
-  </div>
-</div>
-
- -->
 <h1>Upload a file</h1>
 <%= form_tag songs_path, enctype: 'multipart/form-data' do %>
   <%= file_field_tag :file  %>

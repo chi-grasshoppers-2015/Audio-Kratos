@@ -7,13 +7,9 @@ Controller.prototype = {
     function() {
       this.bindEvents();
       this.audio = new AudioPlayer();
+      this.playlist = new Playlist();
       setInterval(this.conduct.bind(this), 17)
     },
-
-  addAudioSrc:
-    function(url) {
-      this.audio.init(url);
-  },
 
   bindEvents:
     function(){
@@ -23,6 +19,26 @@ Controller.prototype = {
       $(document).on('click', "canvas", this.handleEnd.bind(this));
       $(document).on('touchstart', "canvas", this.handleStart.bind(this));
       $(document).on('touchend', "canvas", this.handleEnd.bind(this));
+      $(document).on('click', 'a.song-link', this.setSong.bind(this));
+      $(document).on('ended', 'audio', this.nextSong);
+  },
+
+  setSong:
+    function(event){
+      var url = this.playlist.getURL(event);
+      this.addAudioSrc(url)
+  },
+
+  // nextSong:
+  //   function(){
+  //     console.log("made it into audio ended");
+  //     $("a[data-index="+(parseInt(index)+1)+"]").click();
+  //     $("audio").trigger("play");
+  // },
+
+  addAudioSrc:
+    function(url) {
+      this.audio.init(url);
   },
 
   resetCanvas:

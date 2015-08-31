@@ -43,22 +43,22 @@
       controller = new Controller();
       controller.init();
 
-      $('a.song-link').click(function() {
+      // $('a.song-link').click(function() {
 
-        var currentSong = $(this);
-        var url = currentSong.attr('href');
-        var index = currentSong.attr('data-index');
+        // var currentSong = $(this);
+        // var url = currentSong.attr('href');
+        // var index = currentSong.attr('data-index');
 
-        controller.addAudioSrc(url);
+        // controller.addAudioSrc(url);
 
-        $('audio').on('ended', function(){
-          console.log("made it into audio ended")
-          $("a[data-index="+(parseInt(index)+1)+"]").click();
-          $("audio").trigger("play");
-        })
+        // $('audio').on('ended', function(){
+          // console.log("made it into audio ended");
+          // $("a[data-index="+(parseInt(index)+1)+"]").click();
+          // $("audio").trigger("play");
+        // })
 
-        return false;
-      });
+        // return false;
+      // });
 
       $('a.song-link').first().click();
 
