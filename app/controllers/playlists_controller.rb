@@ -11,6 +11,9 @@ class PlaylistsController < ApplicationController
   def show
     @playlist = Playlist.find(params[:id])
     @songs = @playlist.songs.order(sort_column + " " + sort_direction)
+
+
+
   end
 
 end

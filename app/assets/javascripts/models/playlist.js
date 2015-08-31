@@ -28,24 +28,12 @@ Playlist.prototype = {
     function(event){
       event.preventDefault();
 
-
       var row = $(event.target).parent().parent();
 
       $('.playing').removeClass('playing')
 
       row.addClass('playing');
 
-      // // find the data in the row of the link that was clicked
-      // this.currentURL = $(event.target).attr('href');
-      // this.currentTitle = $(event.target).html();
-
-      // this.currentAlbum = row.find('.album').html();
-      // this.currentArtist = row.find('.artist').html();
-      // this.currentTrack = row.find('.track').html();
-      // this.currentGenre = row.find('.genre').html();
-
-
-      // find the index of the row clicked
       var index = $(event.target).attr('data-index');
 
       // select the corresponding song in the array with choose song
