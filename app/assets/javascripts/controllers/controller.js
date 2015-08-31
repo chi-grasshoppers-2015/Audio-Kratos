@@ -7,22 +7,42 @@ Controller.prototype = {
     function() {
       this.bindEvents();
       this.audio = new AudioPlayer();
+      this.playlist = new Playlist();
       setInterval(this.conduct.bind(this), 17)
+      $('a.song-link').first().click();
+      $("audio").trigger("pause");
     },
-
-  addAudioSrc:
-    function(url) {
-      this.audio.init(url);
-  },
 
   bindEvents:
     function(){
       window.addEventListener('resize', this.resetCanvas.bind(this));
       // window.addEventListener('orientationchange', this.resetCanvas.bind(this))
+
       $(document).on('mousemove', this.mouse);
       $(document).on('click', "canvas", this.handleEnd.bind(this));
       $(document).on('touchstart', "canvas", this.handleStart.bind(this));
       $(document).on('touchend', "canvas", this.handleEnd.bind(this));
+      $(document).on('click', 'a.song-link', this.updateSong.bind(this));
+      document.addEventListener('ended', this.nextSong.bind(this), true);
+  },
+
+  updateSong:
+    function(event){
+      this.playlist.changeSong(event);
+      this.addAudioSrc(this.playlist.currentURL);
+      $("audio").trigger("play");
+  },
+
+  nextSong:
+    function(event){
+      console.log("made it into audio ended");
+      $("a[data-index="+(parseInt(this.playlist.currentIndex)+1)+"]").click();
+      $("audio").trigger("play");
+  },
+
+  addAudioSrc:
+    function(url) {
+      this.audio.init(url);
   },
 
   resetCanvas:
