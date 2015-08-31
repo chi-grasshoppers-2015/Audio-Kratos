@@ -17,21 +17,21 @@
 <% end %>
 
 <h1>All songs</h1>
-<table>
+<table class="pretty">
   <thead>
     <tr>
       <th></th>
-      <th>Song</th>
-      <th>Artist</th>
-      <th>Album</th>
+      <th><%= sortable "title" %></th>
+      <th><%= sortable "artist" %></th>
+      <th><%= sortable "album" %></th>
       <th>Track No.</th>
-      <th>Genre</th>
+      <th><%= sortable "genre" %></th>
       <th>Delete</th>
     </tr>
   </thead>
 
   <tbody>
-  <% current_user.songs.each_with_index do |song,i| %>
+  <% @songs.each_with_index do |song,i| %>
     <tr>
       <td><%= i %></td>
       <td><%= link_to song.title, song.s3_url, :class => "html5", :data => {index: i} %></td>
