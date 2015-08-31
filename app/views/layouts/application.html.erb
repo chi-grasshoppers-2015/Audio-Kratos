@@ -13,21 +13,6 @@
 
 </head>
 <body>
-<header>
-  <nav>
-    <% if logged_in? %>
-      <span>Welcome, <%= current_user.first_name %>!</span>
-      <%= link_to "Songs Library", songs_path %>
-      <%= link_to "Playlists", playlists_path %>
-      <%= link_to "Sign out", logout_path, method: "delete" %>
-    <% else %>
-      <h2>ByteWayve</h2>
-      <h2><%= link_to "Log in", new_session_path  %></h2>
-    <% end %>
-
-  </nav>
-</header>
-
 
   <section id="container" >
       <header class="header black-bg">
@@ -37,28 +22,39 @@
             <a href="index.html" class="logo"><b>AUDI-O-KRATOS</b></a>
             <div class="nav notify-row" id="top_menu">
                 <ul class="nav top-menu">
+                  <% if logged_in? %>
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
-                            <i class="fa fa-tasks"></i>
-                            <span class="badge bg-theme">1</span>
-                        </a>
-                        <ul class="dropdown-menu extended tasks-bar">
-                            <div class="notify-arrow notify-arrow-green"></div>
-                            <li>
-                                <p class="green">You have 1 Playlist</p>
-                            </li>
-                            <li>
-                                <a href="index.html#">
-                                    <div class="task-info">
-                                        <div class="desc">All Songs</div>
-                                    </div>
-                                </a>
-                            </li>
+                      <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
+                        <i class="fa fa-tasks"></i>
+                        <span class="badge bg-theme"><%= current_user.playlists.count %></span>
+                      </a>
+                <ul class="dropdown-menu extended tasks-bar">
+                  <div class="notify-arrow notify-arrow-green"></div>
+                    <li>
+                      <p class="green">You have <%= current_user.playlists.count %> Playlist</p>
+                    </li>
+                      <% current_user.playlists.each do |playlist| %>
+                        <li>
+                          <%= link_to playlist do %>
+                            <div class='task-info'>
+                              <div class='desc'>
+                                <%= playlist.name %>
+                              </div>
+                            </div>
+                          <% end %>
+                        </li>
+                      <% end %>
 
+                    <%end%>
             </div>
             <div class="top-menu">
               <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="login.html">Logout</a></li>
+                <% if logged_in? %>
+                  <li><%= link_to "Logout", logout_path, method: "delete", class: "logout"%></li>
+                <% else %>
+                  <li><%= link_to "Login", new_session_path, class: "logout"%></li>
+                  <li><%= link_to "Sign Up", new_user_path, class: "logout"%></li>
+                <% end %>
               </ul>
             </div>
         </header>
@@ -77,7 +73,6 @@
                         <span>Playlists</span>
                       </a>
                         <ul class="sub sub-menu-items">
-                          <%= link_to "Playlists", playlists_path %>
                           <% current_user.playlists.each do |playlist| %>
                             <li><%= link_to playlist.name, playlist %></li>
                           <% end %>
