@@ -1,10 +1,13 @@
-
 class SongsController < ApplicationController
+  include SongsHelper
+  helper_method :sort_column, :sort_direction
 
   def index
+    @songs = current_user.songs.order(sort_column + " " + sort_direction)
   end
 
   def new
+
   end
 
   def create
@@ -56,5 +59,17 @@ class SongsController < ApplicationController
     end
 
   end
+
+  private
+
+  def sort_column
+    current_user.songs.column_names.include?(params[:sort]) ? params[:sort] : "title"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+
 
 end
