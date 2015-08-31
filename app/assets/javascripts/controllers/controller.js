@@ -26,6 +26,23 @@ Controller.prototype = {
       document.addEventListener('ended', this.nextSong.bind(this), true);
   },
 
+  loadSongs:
+    function(songs){
+      for(var i=0; i < songs.length; i++){
+        song = new Song(  songs[i].s3_url,
+                          songs[i].title,
+                          songs[i].artist,
+                          songs[i].album,
+                          songs[i].track,
+                          songs[i].genre
+                        )
+
+        this.playlist.songs.push(song)
+      }
+
+      console.log(this.playlist.songs);
+  },
+
   updateSong:
     function(event){
       this.playlist.changeSong(event);

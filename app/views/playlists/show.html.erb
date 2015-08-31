@@ -43,7 +43,11 @@
 
 <script>
   $(document).ready(function() {
+
+    var songs = <%= @songs.to_json.html_safe %>
+    console.log(songs);
     controller = new Controller();
     controller.init();
+    controller.loadSongs(songs);
   });
 </script>

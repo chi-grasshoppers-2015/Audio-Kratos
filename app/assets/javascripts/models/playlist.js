@@ -1,15 +1,23 @@
 var Playlist = function(){
-  this.currentURL = null;
-  this.currentIndex = null;
-  this.currentTitle = null;
-  this.currentArtist = null;
-  this.currentAlbum = null;
-  this.currentTrack = null;
-  this.currentGenre = null;
+    this.currentURL = null;
+    this.currentIndex = null;
+    this.currentTitle = null;
+    this.currentArtist = null;
+    this.currentAlbum = null;
+    this.currentTrack = null;
+    this.currentGenre = null;
+
+    this.songs = [];
+    this.currentSong = null;
 };
 
 Playlist.prototype = {
 
+  createSong:
+    function(url, title, artist, album, track, genre){
+      song = Song.new(url, title, artist, album, track, genre);
+
+  },
 
   changeSong:
     function(event){
@@ -38,11 +46,5 @@ Playlist.prototype = {
       console.log(this.currentAlbum);
       console.log(this.currentIndex);
   },
-
-  // getURL:
-  //   function(){
-  //     return this.currentURL;
-  //     // return $(event.target).attr('href')
-  // }
 
 }
