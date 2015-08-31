@@ -9,8 +9,7 @@ Controller.prototype = {
       this.audio = new AudioPlayer();
       this.playlist = new Playlist();
       setInterval(this.conduct.bind(this), 17)
-      $('a.song-link').first().click();
-      $("audio").trigger("pause");
+
     },
 
   bindEvents:
@@ -26,10 +25,27 @@ Controller.prototype = {
       document.addEventListener('ended', this.nextSong.bind(this), true);
   },
 
+  loadSongs:
+    function(songs){
+      for(var i=0; i < songs.length; i++){
+        song = new Song(  songs[i].s3_url,
+                          songs[i].title,
+                          songs[i].artist,
+                          songs[i].album,
+                          songs[i].track,
+                          songs[i].genre
+                        )
+
+        this.playlist.songs.push(song)
+      }
+
+      console.log(this.playlist.songs);
+  },
+
   updateSong:
     function(event){
       this.playlist.changeSong(event);
-      this.addAudioSrc(this.playlist.currentURL);
+      this.addAudioSrc(this.playlist.currentSong.url);
       $("audio").trigger("play");
   },
 
