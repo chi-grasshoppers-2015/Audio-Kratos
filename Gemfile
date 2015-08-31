@@ -25,6 +25,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'aws-sdk'
 gem 'bcrypt'
 gem 'taglib-ruby', :require => 'taglib'
+gem 'bootstrap-sass', '~> 3.3.5.1'
+gem 'autoprefixer-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
