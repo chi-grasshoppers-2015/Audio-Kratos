@@ -17,6 +17,21 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+* {
+  padding: 0;
+  margin: 0;
+}
+
 .badge {
   background-color: #6c313a;
+}
+
+a {
+  color: #6c313a;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: #6c313a;
+  text-decoration: underline;
 }
