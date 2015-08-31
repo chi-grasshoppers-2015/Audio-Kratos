@@ -8,6 +8,15 @@ nav h2{
   display: inline-block;
 }
 
+.controls {
+  margin: 0 auto;
+  width: 400px;
+}
+
+audio {
+  width: 400px;
+}
+
 table.pretty {
   border-collapse: collapse;
 }
