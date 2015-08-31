@@ -9,8 +9,7 @@ Controller.prototype = {
       this.audio = new AudioPlayer();
       this.playlist = new Playlist();
       setInterval(this.conduct.bind(this), 17)
-      $('a.song-link').first().click();
-      $("audio").trigger("pause");
+
     },
 
   bindEvents:
@@ -46,7 +45,7 @@ Controller.prototype = {
   updateSong:
     function(event){
       this.playlist.changeSong(event);
-      this.addAudioSrc(this.playlist.currentURL);
+      this.addAudioSrc(this.playlist.currentSong.url);
       $("audio").trigger("play");
   },
 

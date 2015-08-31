@@ -43,11 +43,13 @@
 
 <script>
   $(document).ready(function() {
-
-    var songs = <%= @songs.to_json.html_safe %>
-    console.log(songs);
     controller = new Controller();
     controller.init();
+
+    var songs = <%= @songs.to_json.html_safe %>
     controller.loadSongs(songs);
+
+    $('a.song-link').first().click();
+    $("audio").trigger("pause");
   });
 </script>
