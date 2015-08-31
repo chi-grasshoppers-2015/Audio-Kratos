@@ -8,6 +8,7 @@ Controller.prototype = {
       this.bindEvents();
       this.audio = new AudioPlayer();
       this.playlist = new Playlist();
+      this.playlistView = new PlaylistView();
       setInterval(this.conduct.bind(this), 17)
 
     },
@@ -46,14 +47,16 @@ Controller.prototype = {
   updateSong:
     function(event){
       this.playlist.changeSong(event);
+      this.playlistView.currentlyPlaying(this.playlist.currentSong)
       this.addAudioSrc(this.playlist.currentSong.url);
+
       $("audio").trigger("play");
   },
 
   nextSong:
     function(event){
       console.log("made it into audio ended");
-      $("a[data-index="+(parseInt(this.playlist.currentIndex)+1)+"]").click();
+      $("a[data-index="+(parseInt(this.playlist.currentSongIndex())+1)+"]").click();
       $("audio").trigger("play");
   },
 
