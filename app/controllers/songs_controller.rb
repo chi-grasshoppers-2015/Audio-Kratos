@@ -1,6 +1,6 @@
 class SongsController < ApplicationController
-  include SongsHelper
-  helper_method :sort_column, :sort_direction
+  # include SongsHelper
+  # helper_method :sort_column, :sort_direction
 
   def index
     @songs = current_user.songs.order(sort_column + " " + sort_direction)
@@ -17,7 +17,7 @@ class SongsController < ApplicationController
     @song = Song.new(
       original_filepath: file.path,
       original_filename: file.original_filename,
-      owner_id: current_user.id,
+      owner_id: current_user.id
     )
 
     @song.create_s3
@@ -35,7 +35,11 @@ class SongsController < ApplicationController
       end
     end
 
+
     if @song.save
+      playlist = Playlist.find_by(owner_id: current_user.id, name: "All songs")
+      PlaylistAssociation.create(song_id: @song.id, playlist_id: playlist.id)
+
       redirect_to songs_path, success: 'File successfully uploaded'
     else
       flash.now[:notice] = 'There was an error'
@@ -59,17 +63,5 @@ class SongsController < ApplicationController
     end
 
   end
-
-  private
-
-  def sort_column
-    current_user.songs.column_names.include?(params[:sort]) ? params[:sort] : "title"
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
-
 
 end

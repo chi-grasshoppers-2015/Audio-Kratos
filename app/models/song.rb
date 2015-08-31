@@ -3,6 +3,10 @@ require 'taglib'
 class Song < ActiveRecord::Base
   belongs_to :owner, class_name: "User"
 
+  has_many :playlist_associations
+  has_many :playlists, through: :playlist_associations
+
+
   def create_s3
     @bucket = bucket
     @resource = upload_resource

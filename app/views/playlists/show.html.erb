@@ -1,0 +1,66 @@
+<div class="player">
+  <div class="viewer">
+  </div>
+  <div class="controls">
+    <audio controls="controls"></audio>
+  </div>
+</div>
+
+<h1><%= @playlist.name %> playlist</h1>
+<table class="pretty">
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= sortable "title" %></th>
+      <th><%= sortable "artist" %></th>
+      <th><%= sortable "album" %></th>
+      <th><%= sortable "track" %></th>
+      <th><%= sortable "genre" %></th>
+      <th>Remove from playlist holder</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @songs.each_with_index do |song,i| %>
+    <tr>
+      <td><%= i %></td>
+      <td><%= link_to song.title, song.s3_url, :class => "html5", :data => {index: i} %></td>
+      <td><%= song.artist %></td>
+      <td><%= song.album %></td>
+      <td><%= song.track %></td>
+      <td><%= song.genre %></td>
+      <td>holder</td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+
+
+
+<script>
+  $(document).ready(function() {
+      controller = new Controller();
+      controller.init();
+
+      $('a.html5').click(function() {
+
+        var currentSong = $(this);
+        var url = currentSong.attr('href');
+        var index = currentSong.attr('data-index');
+
+        controller.addAudioSrc(url);
+
+        $('audio').on('ended', function(){
+          console.log("made it into audio ended")
+          $("a[data-index="+(parseInt(index)+1)+"]").click();
+          $("audio").trigger("play");
+        })
+
+        return false;
+      });
+
+      $('a.html5').first().click();
+
+  });
+</script>
