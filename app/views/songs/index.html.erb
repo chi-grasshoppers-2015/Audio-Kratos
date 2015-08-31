@@ -31,7 +31,7 @@
   <% @songs.each_with_index do |song,i| %>
     <tr>
       <td><%= i %></td>
-      <td><%= link_to song.title, song.s3_url, :class => "html5", :data => {index: i} %></td>
+      <td><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
       <td><%= song.artist %></td>
       <td><%= song.album %></td>
       <td><%= song.track %></td>
@@ -48,7 +48,7 @@ $(document).ready(function() {
     controller = new Controller();
     controller.init();
 
-    $('a.html5').click(function() {
+    $('a.song-link').click(function() {
 
       var currentSong = $(this);
       var url = currentSong.attr('href');
@@ -65,7 +65,7 @@ $(document).ready(function() {
       return false;
     });
 
-    $('a.html5').first().click();
+    $('a.song-link').first().click();
 
 });
 </script>
