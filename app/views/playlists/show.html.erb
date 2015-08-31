@@ -29,7 +29,7 @@
   <tbody>
   <% @songs.each_with_index do |song,i| %>
      <tr>
-      <td><%= i %></td>
+      <td><%= i + 1 %></td>
       <td class="title"><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
       <td class="artist"><%= song.artist %></td>
       <td class="album"><%= song.album %></td>
