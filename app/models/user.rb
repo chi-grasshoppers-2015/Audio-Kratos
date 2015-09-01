@@ -6,6 +6,11 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :email, :hashed_password
   validates :email, uniqueness: true
 
+
+  def name
+    self.first_name + " " + self.last_name
+  end
+
   def password
     @password ||= BCrypt::Password.new(hashed_password)
   end
