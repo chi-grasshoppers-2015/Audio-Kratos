@@ -27,7 +27,7 @@
       <td><%= song.album %></td>
       <td><%= song.track %></td>
       <td><%= song.genre %></td>
-      <td><%= link_to "Delete", song, method: :delete, :confirm => 'Are you sure you want to delete ' + song.original_filename + '?' %></td>
+      <td><%= button_to "Delete", song, method: :delete, form_class: "logout" %></td>
     </tr>
   <% end %>
   </tbody>
