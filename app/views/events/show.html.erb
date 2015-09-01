@@ -29,6 +29,76 @@
 </ul>
 
 
-<% if @my_event %>
 
-<% end %>
+<div class="player">
+  <div class="viewer">
+  </div>
+
+  <div class="current-data">
+    <img class="current-art" src="">
+    <div class="current-content">
+      <span class="current-title"></span><br>
+      <span class="current-artist"></span><br>
+      <span class="current-album"></span><br>
+    </div>
+    <div class="control-panel">
+      <div class="more-controls">
+        <a href="" ><i class="fa fa-backward"></i></a>
+        <a href="" ><i class="fa fa-forward"></i></a>
+      </div>
+      <div class="controls">
+        <audio controls="controls"></audio>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ <div class="col-md-12 mt">
+    <div class="content-panel">
+      <table class="table table-hover playlist-table">
+        <h4><%= @event.name.upcase %> PLAYLIST</h4>
+          <hr>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Song</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Track</th>
+                <th>Genre</th>
+              </tr>
+            </thead>
+            <tbody>
+               <% @songs.each_with_index do |song,i| %>
+                <tr>
+                  <td><%= i + 1 %></td>
+                  <td class="title"><%= link_to song.title ||= "untitled", song.s3_url, :class => "song-link", :data => {index: i} %></td>
+                  <td class="artist"><%= song.artist %></td>
+                  <td class="album"><%= song.album %></td>
+                  <td class="track"><%= song.track %></td>
+                  <td class="genre"><%= song.genre %></td>
+                </tr>
+              <% end %>
+            </tbody>
+    </table>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function() {
+    var controller = new Controller();
+    controller.init();
+
+    var songs = <%= @songs.to_json.html_safe %>
+    controller.loadSongs(songs);
+
+    $('a.song-link').first().click();
+    $("audio").trigger("pause");
+
+    var playlistsController = new PlaylistsController(controller.playlist, controller.playlistView);
+    playlistsController.init();
+  });
+</script>
