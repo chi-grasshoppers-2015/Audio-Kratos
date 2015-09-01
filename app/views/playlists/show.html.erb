@@ -12,36 +12,7 @@
 
 </div>
 
-<<<<<<< HEAD
-<h1><%= @playlist.name %> playlist</h1>
-<table class="pretty">
-  <thead>
-    <tr>
-      <th></th>
-      <th><%= sortable "title" %></th>
-      <th><%= sortable "artist" %></th>
-      <th><%= sortable "album" %></th>
-      <th><%= sortable "track" %></th>
-      <th><%= sortable "genre" %></th>
-      <th>Remove from playlist holder</th>
-    </tr>
-  </thead>
 
-  <tbody>
-  <% @songs.each_with_index do |song,i| %>
-     <tr>
-      <td><%= i + 1 %></td>
-      <td class="title"><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
-      <td class="artist"><%= song.artist %></td>
-      <td class="album"><%= song.album %></td>
-      <td class="track"><%= song.track %></td>
-      <td class="genre"><%= song.genre %></td>
-      <td>holder</td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-=======
  <div class="col-md-12 mt">
     <div class="content-panel">
       <table class="table table-hover playlist-table">
@@ -50,23 +21,21 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th><%= sortable "title" %></th>
-                <th><%= sortable "artist" %></th>
-                <th><%= sortable "album" %></th>
-                <th><%= sortable "track" %></th>
-                <th><%= sortable "genre" %></th>
+                <th><%= sortable "artist", @playlist.id%></th>
+                <th><%= sortable "album", @playlist.id %></th>
+                <th><%= sortable "track", @playlist.id %></th>
+                <th><%= sortable "genre", @playlist.id %></th>
               </tr>
             </thead>
             <tbody>
               <% @songs.each_with_index do |song,i| %>
                  <tr>
-                  <td><%= i %></td>
+                  <td><%= i + 1 %></td>
                   <td class="title"><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
                   <td class="artist"><%= song.artist %></td>
                   <td class="album"><%= song.album %></td>
                   <td class="track"><%= song.track %></td>
                   <td class="genre"><%= song.genre %></td>
-                  <td>holder</td>
                 </tr>
               <% end %>
               </tbody>
@@ -74,13 +43,6 @@
     </div>
    </div>
   </div>
-
-
-
-
-
-
->>>>>>> 3fb573e962e78d515a65516c55da082951bfcf79
 
 <script>
   $(document).ready(function() {
