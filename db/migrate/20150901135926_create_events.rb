@@ -3,7 +3,7 @@ class CreateEvents < ActiveRecord::Migration
     create_table :events do |t|
       t.string :name, null: false
       t.integer :owner_id, null: false
-      t.datetime :start,
+      t.datetime :start
       t.datetime :finish
 
       t.timestamps null: false
