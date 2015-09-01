@@ -3,7 +3,8 @@ class SongsController < ApplicationController
   # helper_method :sort_column, :sort_direction
 
   def index
-    @songs = current_user.songs.order(sort_column + " " + sort_direction)
+    @songs = current_user.songs
+    #.order(sort_column + " " + sort_direction)
   end
 
   def new
@@ -25,16 +26,17 @@ class SongsController < ApplicationController
     TagLib::MPEG::File.open(file.path) do |fileref|
       unless fileref.nil?
         tag = fileref.id3v2_tag
+        images = ALBUMART.search("#{tag.artist}", "#{tag.album}", [:small, :medium])
         @song.assign_attributes(  artist: tag.artist,
                                   album: tag.album,
                                   track: tag.track,
                                   title: tag.title,
                                   genre: tag.genre,
-                                  release_year: tag.year
+                                  release_year: tag.year,
+                                  album_url: images[:images][:small]
                                 )
       end
     end
-
 
     if @song.save
       playlist = Playlist.find_by(owner_id: current_user.id, name: "All songs")
