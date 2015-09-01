@@ -1,0 +1,26 @@
+<h1>Create Event</h1>
+<% if @event && @event.errors.any? %>
+
+  <ul>
+    <% @event.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+
+<% end %>
+
+
+
+<%= form_for(:event, url: events_path) do |f| %>
+
+  <%= label_tag("Event name") %><br>
+  <input type="name" name="event[name]"></input><br><br>
+  <%= submit_tag("Create") %>
+<% end %>
+
+  <%#= label_tag("Start time") %><br>
+  <%#= datetime_field(:event, :start) %><br><br>
+
+  <%#= label_tag("End time") %><br>
+  <%#= datetime_field(:event, :start) %><br><br>
+

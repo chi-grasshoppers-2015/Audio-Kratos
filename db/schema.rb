@@ -11,14 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150831015746) do
+ActiveRecord::Schema.define(version: 20150901141836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "events", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.integer  "owner_id",   null: false
+    t.datetime "start"
+    t.datetime "finish"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "playlist_associations", force: :cascade do |t|
     t.integer  "song_id",     null: false
     t.integer  "playlist_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "playlist_events", force: :cascade do |t|
+    t.integer  "playlist_id", null: false
+    t.integer  "event_id",    null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
