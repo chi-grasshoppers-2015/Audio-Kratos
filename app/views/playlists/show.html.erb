@@ -27,23 +27,13 @@
   </thead>
 
   <tbody>
-  <% @songs.each_with_index do |song,i| %>
-     <tr>
-      <td><%= i %></td>
-      <td class="title"><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
-      <td class="artist"><%= song.artist %></td>
-      <td class="album"><%= song.album %></td>
-      <td class="track"><%= song.track %></td>
-      <td class="genre"><%= song.genre %></td>
-      <td>holder</td>
-    </tr>
-  <% end %>
+    <%= render partial: "playlist" %>
   </tbody>
 </table>
 
 <script>
   $(document).ready(function() {
-    controller = new Controller();
+    var controller = new Controller();
     controller.init();
 
     var songs = <%= @songs.to_json.html_safe %>
@@ -51,5 +41,8 @@
 
     $('a.song-link').first().click();
     $("audio").trigger("pause");
+
+    var playlistsController = new PlaylistsController(controller.playlist, controller.playlistView);
+    playlistsController.init();
   });
 </script>

@@ -10,8 +10,7 @@ Controller.prototype = {
       this.playlist = new Playlist();
       this.playlistView = new PlaylistView();
       setInterval(this.conduct.bind(this), 17)
-
-    },
+  },
 
   bindEvents:
     function(){
