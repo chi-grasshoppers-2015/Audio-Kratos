@@ -62,6 +62,7 @@
           <hr>
             <thead>
               <tr>
+                <th>Vote Count</th>
                 <th>#</th>
                 <th>Song</th>
                 <th>Artist</th>
@@ -73,6 +74,7 @@
             <tbody>
                <% @songs.each_with_index do |song,i| %>
                 <tr>
+                  <td><%= song.net_votes %></td>
                   <td><%= i + 1 %></td>
                   <td class="title"><%= link_to song.title ||= "untitled", song.s3_url, :class => "song-link", :data => {index: i} %></td>
                   <td class="artist"><%= song.artist %></td>
@@ -92,7 +94,8 @@
     var controller = new Controller();
     controller.init();
 
-    var songs = <%= @songs.to_json.html_safe %>
+    var songs = <%= @songs.to_json({}).html_safe %>
+
     controller.loadSongs(songs);
 
     $('a.song-link').first().click();

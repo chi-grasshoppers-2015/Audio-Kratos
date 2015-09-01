@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150901141836) do
+ActiveRecord::Schema.define(version: 20150901212658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,10 +47,10 @@ ActiveRecord::Schema.define(version: 20150901141836) do
   end
 
   create_table "songs", force: :cascade do |t|
-    t.string   "original_filepath", null: false
-    t.string   "original_filename", null: false
-    t.string   "s3_url",            null: false
-    t.string   "s3_filename",       null: false
+    t.string   "original_filepath",             null: false
+    t.string   "original_filename",             null: false
+    t.string   "s3_url",                        null: false
+    t.string   "s3_filename",                   null: false
     t.string   "album_url"
     t.string   "artist"
     t.string   "album"
@@ -58,9 +58,10 @@ ActiveRecord::Schema.define(version: 20150901141836) do
     t.string   "title"
     t.string   "genre"
     t.integer  "release_year"
-    t.integer  "owner_id",          null: false
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "owner_id",                      null: false
+    t.integer  "net_votes",         default: 0
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -70,6 +71,14 @@ ActiveRecord::Schema.define(version: 20150901141836) do
     t.string   "hashed_password", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "song_id",    null: false
+    t.integer  "user_id",    null: false
+    t.integer  "value",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

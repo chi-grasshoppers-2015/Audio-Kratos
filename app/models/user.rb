@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   has_many :songs, foreign_key: "owner_id"
   has_many :playlists, foreign_key: "owner_id"
   has_many :events, foreign_key: "owner_id"
+  has_many :votes
+
 
   validates_presence_of :first_name, :last_name, :email, :hashed_password
   validates :email, uniqueness: true

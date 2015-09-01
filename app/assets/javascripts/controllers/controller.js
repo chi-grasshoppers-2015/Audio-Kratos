@@ -41,7 +41,8 @@ Controller.prototype = {
                           songs[i].album,
                           songs[i].track,
                           songs[i].genre,
-                          songs[i].album_url
+                          songs[i].album_url,
+                          songs[i].net_votes
                         )
 
         this.playlist.songs.push(song)
