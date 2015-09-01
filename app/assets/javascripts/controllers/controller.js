@@ -23,7 +23,7 @@ Controller.prototype = {
       $(document).on('touchend', "canvas", this.handleEsc.bind(this));
       $(".more-controls").on("click", 'a.forward', this.nextSong.bind(this))
       $(".more-controls").on("click", 'a.backward', this.prevSong.bind(this))
-      $(".more-controls").on("click", 'a.change', this.changeTheme.bind(this))
+      $(".visual-control").on("click", 'a.change', this.changeTheme.bind(this))
 
       // $(document).on('keyup', this.handleEnd.bind(this))
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
@@ -75,7 +75,8 @@ Controller.prototype = {
 
   changeTheme:
     function(){
-
+      event.preventDefault();
+      this.canvas.changeTheme();
     },
 
   addAudioSrc:

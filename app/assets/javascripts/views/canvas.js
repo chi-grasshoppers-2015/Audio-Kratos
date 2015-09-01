@@ -1,6 +1,9 @@
 var Canvas = function(dimensions){
   this.touch = false;
   this.maximize = false;
+  this.drawOscTheme = false;
+  this.drawRedBeatsTheme = true;
+  this.drawCanoeTheme = false;
   this.update(dimensions);
 }
 
@@ -9,15 +12,9 @@ Canvas.prototype = {
   update:
     function(dimensions){
       this.canvas = document.createElement("canvas");
-      // canvas = $('.viewer canvas')
-
       this.canvas.setAttribute('width', dimensions.width);
       this.canvas.setAttribute('height', dimensions.height);
-      // canvas.css("width", dimensions.width);
-      // canvas.css("height", dimensions.height);
-
       this.ctx = this.canvas.getContext('2d');
-      // canvas.getContext('2d');
 
       this.addCanvas();
   },
@@ -67,10 +64,11 @@ Canvas.prototype = {
         this.ctx.fillRect(x,0,barWidth,barHeight);
         x += barWidth + 0.5;
       }
-    },
+  },
 
   drawOsc:
     function(audio){
+      this.drawOscTheme = true
       this.drawCanvas("#004737");
       var quarterHeight = this.canvas.height/4;
       this.ctx.strokeStyle = "red";
@@ -132,18 +130,40 @@ Canvas.prototype = {
       this.ctx.lineTo(this.canvas.width, this.canvas.height/2);
       this.ctx.stroke();
 
-    },
+  },
 
-    drawKit:
-      function(audio){
+  drawTheme:
+    function(audio){
+      if(this.drawRedBeatsTheme){
+        this.drawRedBeats(audio);
+      }
+      else if(this.drawCanoeTheme){
+        this.drawCanoe(audio);
+      }
+      else if(this.drawOscTheme){
+        this.drawOsc(audio);
+      };
+  },
 
-      },
+    changeTheme:
+      function(){
+    console.log('here')
+        if(this.drawRedBeatsTheme){
+          this.drawRedBeatsTheme = false;
+          this.drawCanoeTheme = true;
+        }
+        else if(this.drawCanoeTheme){
+          this.drawCanoeTheme = false;
+          this.drawOscTheme = true;
+        }
+        else if(this.drawOscTheme){
+          this.drawOscTheme = false;
+          this.drawRedBeatsTheme = true;
+        };
+  },
 
   drawList:
     function(audio){
-      // this.drawRedBeats(audio);
-      // this.drawCanoe(audio);
-      this.drawOsc(audio);
-
+      this.drawTheme(audio);
   }
 }
