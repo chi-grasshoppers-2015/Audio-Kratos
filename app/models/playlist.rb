@@ -7,4 +7,9 @@ class Playlist < ActiveRecord::Base
   has_many :playlist_events
   has_many :events, through: :playlist_events
 
+
+  def owner
+    User.find(self.owner_id).name
+  end
+
 end

@@ -6,6 +6,11 @@ class Song < ActiveRecord::Base
   has_many :playlist_associations
   has_many :playlists, through: :playlist_associations
 
+  has_many :votes
+
+  def init
+
+  end
 
   def create_s3
     @bucket = bucket
@@ -24,6 +29,14 @@ class Song < ActiveRecord::Base
   def destroy_s3
     s3 = Aws::S3::Resource.new(region:'us-west-2')
     s3.bucket('bytewayve').object(self.s3_filename).delete
+  end
+
+  def update_vote_count
+    self.net_votes = self.votes.map(&:value).reduce(:+)
+  end
+
+  def clear_votes
+    self.net_votes = 0
   end
 
   private
