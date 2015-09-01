@@ -25,14 +25,14 @@ class SongsController < ApplicationController
     TagLib::MPEG::File.open(file.path) do |fileref|
       unless fileref.nil?
         tag = fileref.id3v2_tag
-        images = ALBUMART.search("#{tag.artist}", "#{tag.album}", [:small, :medium])
+        images = ALBUMART.search("#{tag.artist}", "#{tag.album}", [:medium, :large])
         @song.assign_attributes(  artist: tag.artist,
                                   album: tag.album,
                                   track: tag.track,
                                   title: tag.title,
                                   genre: tag.genre,
                                   release_year: tag.year,
-                                  album_url: images[:images][:small]
+                                  album_url: images[:images][:medium]
                                 )
       end
     end
