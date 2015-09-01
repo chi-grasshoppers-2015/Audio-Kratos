@@ -5,6 +5,7 @@ class CreateSongs < ActiveRecord::Migration
       t.string  :original_filename, null: false
       t.string  :s3_url, null: false
       t.string  :s3_filename, null: false
+      t.string  :album_url
       t.string  :artist
       t.string  :album
       t.integer :track
