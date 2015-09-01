@@ -9,27 +9,30 @@
     <h4 class="current-artist"><h4>
     <h5 class="current-album"></h5>
   </div>
-
 </div>
 
-<h1><%= @playlist.name %> playlist</h1>
-<table class="pretty">
-  <thead>
-    <tr>
-      <th></th>
-      <th><%= sortable "title" %></th>
-      <th><%= sortable "artist" %></th>
-      <th><%= sortable "album" %></th>
-      <th><%= sortable "track" %></th>
-      <th><%= sortable "genre" %></th>
-      <th>Remove from playlist holder</th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <%= render partial: "playlist" %>
-  </tbody>
-</table>
+<div class="col-md-12 mt">
+  <div class="content-panel">
+    <table class="table table-hover playlist-table">
+      <h4><%= @playlist.name %></h4>
+      <hr>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th><%= sortable "title" %></th>
+          <th><%= sortable "artist" %></th>
+          <th><%= sortable "album" %></th>
+          <th><%= sortable "track" %></th>
+          <th><%= sortable "genre" %></th>
+        </tr>
+      </thead>
+      <tbody>
+         <%= render partial: "playlist" %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <script>
   $(document).ready(function() {

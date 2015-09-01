@@ -11,12 +11,31 @@
  * file per style scope.
  *
  *= require_tree .
+*= require jquery-ui/draggable
+ *= require jquery-ui/resizable
+ *= require jquery-ui/selectable
+ *= require jquery-ui/sortable
  *= require_tree ../../../vendor/assets/stylesheets/.
  *= require_self
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+* {
+  padding: 0;
+  margin: 0;
+}
+
 .badge {
   background-color: #6c313a;
+}
+
+a {
+  color: #6c313a;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: #6c313a;
+  text-decoration: underline;
 }
