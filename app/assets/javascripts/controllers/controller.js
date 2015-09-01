@@ -21,7 +21,7 @@ Controller.prototype = {
       $(document).on('click', "canvas", this.handleEnd.bind(this));
       $(document).on('touchstart', "canvas", this.handleStart.bind(this));
       $(document).on('touchend', "canvas", this.handleEsc.bind(this));
-      $(document).on('keyup', this.handleEnd.bind(this))
+      // $(document).on('keyup', this.handleEnd.bind(this))
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
       document.addEventListener('ended', this.nextSong.bind(this), true);
   },

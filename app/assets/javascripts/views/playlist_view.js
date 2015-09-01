@@ -20,7 +20,7 @@ PlaylistView.prototype = {
     function(songs){
       this.removeRows();
       for(var i = 0; i < songs.length; i++){
-        $('tbody').append("<tr><td>"+ (parseInt(i) + 1) +"</td><td><a class='song-link' data-index='"+i+"' href='"+songs[i].url+"'>"+songs[i].title +"</a></td><td>"+ songs[i].artist +"</td><td>"+ songs[i].album +"</td><td>"+ songs[i].track +"</td><td>"+ songs[i].genre +"</td><td>holder</td></tr>")
+        $('tbody').append("<tr><td>"+ (parseInt(i) + 1) +"</td><td><a class='song-link' data-index='"+i+"' href='"+songs[i].url+"'>"+songs[i].title +"</a></td><td>"+ songs[i].artist +"</td><td>"+ songs[i].album +"</td><td>"+ songs[i].track +"</td><td>"+ songs[i].genre +"</td></tr>")
       }
 
   },
