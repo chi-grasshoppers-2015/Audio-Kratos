@@ -9,82 +9,34 @@
     <h4 class="current-artist"><h4>
     <h5 class="current-album"></h5>
   </div>
-
 </div>
 
-<<<<<<< HEAD
-<h1><%= @playlist.name %> playlist</h1>
-<table class="pretty">
-  <thead>
-    <tr>
-      <th></th>
-      <th><%= sortable "title" %></th>
-      <th><%= sortable "artist" %></th>
-      <th><%= sortable "album" %></th>
-      <th><%= sortable "track" %></th>
-      <th><%= sortable "genre" %></th>
-      <th>Remove from playlist holder</th>
-    </tr>
-  </thead>
 
-  <tbody>
-  <% @songs.each_with_index do |song,i| %>
-     <tr>
-      <td><%= i + 1 %></td>
-      <td class="title"><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
-      <td class="artist"><%= song.artist %></td>
-      <td class="album"><%= song.album %></td>
-      <td class="track"><%= song.track %></td>
-      <td class="genre"><%= song.genre %></td>
-      <td>holder</td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-=======
- <div class="col-md-12 mt">
-    <div class="content-panel">
-      <table class="table table-hover playlist-table">
-        <h4><%= @playlist.name %></h4>
-          <hr>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th><%= sortable "title" %></th>
-                <th><%= sortable "artist" %></th>
-                <th><%= sortable "album" %></th>
-                <th><%= sortable "track" %></th>
-                <th><%= sortable "genre" %></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @songs.each_with_index do |song,i| %>
-                 <tr>
-                  <td><%= i %></td>
-                  <td class="title"><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
-                  <td class="artist"><%= song.artist %></td>
-                  <td class="album"><%= song.album %></td>
-                  <td class="track"><%= song.track %></td>
-                  <td class="genre"><%= song.genre %></td>
-                  <td>holder</td>
-                </tr>
-              <% end %>
-              </tbody>
-            </table>
-    </div>
-   </div>
+<div class="col-md-12 mt">
+  <div class="content-panel">
+    <table class="table table-hover playlist-table">
+      <h4><%= @playlist.name %></h4>
+      <hr>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th><%= sortable "title" %></th>
+          <th><%= sortable "artist" %></th>
+          <th><%= sortable "album" %></th>
+          <th><%= sortable "track" %></th>
+          <th><%= sortable "genre" %></th>
+        </tr>
+      </thead>
+      <tbody>
+         <%= render partial: "playlist" %>
+      </tbody>
+    </table>
   </div>
-
-
-
-
-
-
->>>>>>> 3fb573e962e78d515a65516c55da082951bfcf79
+</div>
 
 <script>
   $(document).ready(function() {
-    controller = new Controller();
+    var controller = new Controller();
     controller.init();
 
     var songs = <%= @songs.to_json.html_safe %>
@@ -92,5 +44,8 @@
 
     $('a.song-link').first().click();
     $("audio").trigger("pause");
+
+    var playlistsController = new PlaylistsController(controller.playlist, controller.playlistView);
+    playlistsController.init();
   });
 </script>
