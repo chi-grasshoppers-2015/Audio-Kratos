@@ -21,6 +21,10 @@ Controller.prototype = {
       $(document).on('click', "canvas", this.handleEnd.bind(this));
       $(document).on('touchstart', "canvas", this.handleStart.bind(this));
       $(document).on('touchend', "canvas", this.handleEsc.bind(this));
+      $(".more-controls").on("click", 'a.forward', this.nextSong.bind(this))
+      $(".more-controls").on("click", 'a.backward', this.prevSong.bind(this))
+      $(".more-controls").on("click", 'a.change', this.changeTheme.bind(this))
+
       // $(document).on('keyup', this.handleEnd.bind(this))
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
       document.addEventListener('ended', this.nextSong.bind(this), true);
@@ -42,8 +46,6 @@ Controller.prototype = {
 
         this.playlist.songs.push(song)
       }
-
-      console.log(this.playlist.songs);
   },
 
   updateSong:
@@ -57,10 +59,23 @@ Controller.prototype = {
 
   nextSong:
     function(event){
-      console.log("made it into audio ended");
+      event.preventDefault();
       $("a[data-index="+(parseInt(this.playlist.currentSongIndex())+1)+"]").click();
       $("audio").trigger("play");
   },
+
+  prevSong:
+    function(event){
+      event.preventDefault();
+      console.log("HERE")
+      $("a[data-index="+(parseInt(this.playlist.currentSongIndex())-1)+"]").click();
+      $("audio").trigger("play");
+  },
+
+  changeTheme:
+    function(){
+
+    },
 
   addAudioSrc:
     function(url) {
