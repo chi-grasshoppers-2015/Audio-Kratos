@@ -1,0 +1,26 @@
+<h3><%= @event.name %></h3>
+
+
+<% if @open_playlists.any? %>
+  <h4>Add your playlist to the event:</h4>
+  <%= form_for @playlistevent, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
+
+    <%= hidden_field_tag(:event_id, params[:id]) %>
+
+    <%= f.select(:playlist_id) do %>
+      <% @open_playlists.each do |playlist| -%>
+        <%= content_tag(:option, playlist.name, value: playlist.id) %>
+      <% end %>
+    <% end %>
+
+    <%= f.submit "Add playlist" %>
+  <% end %>
+<% end %>
+
+<ul>
+<% @songs.each do |song| %>
+
+  <li><%= song.title %></li>
+
+<% end %>
+</ul>
