@@ -10,8 +10,7 @@ Controller.prototype = {
       this.playlist = new Playlist();
       this.playlistView = new PlaylistView();
       setInterval(this.conduct.bind(this), 17)
-
-    },
+  },
 
   bindEvents:
     function(){
@@ -115,7 +114,7 @@ Controller.prototype = {
 
   handleEsc:
     function(event){
-      if(event.keyCode == 27) {
+      if(event.keyCode == 27 && this.canvas.maximize) {
         this.handleEnd
       }
   },
