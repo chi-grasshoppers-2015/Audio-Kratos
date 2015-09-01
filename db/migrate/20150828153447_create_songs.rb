@@ -13,6 +13,7 @@ class CreateSongs < ActiveRecord::Migration
       t.string  :genre
       t.integer :release_year
       t.integer :owner_id, null: false
+      t.integer :net_votes, default: 0
 
       t.timestamps null: false
     end

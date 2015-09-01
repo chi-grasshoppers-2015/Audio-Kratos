@@ -22,6 +22,12 @@ class EventsController < ApplicationController
     @open_playlists = @my_playlists - @event_playlists
     @playlistevent = PlaylistEvent.new
     @songs = @event.songs
+
+    puts @songs
+
+    @my_event = current_user.id == @event.owner_id
+
+
   end
 
   def index
