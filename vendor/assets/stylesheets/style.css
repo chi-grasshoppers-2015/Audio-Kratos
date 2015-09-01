@@ -41,7 +41,6 @@ a, a:hover, a:focus {
 
 
 .viewer {
-
   text-align: center;
 }
 
@@ -2258,4 +2257,30 @@ table, td, th {
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+audio {
+  width: 75%;
+  color: #393f51;
+}
+
+.controls {
+  text-align: center;
+  width: 100%;
+}
+
+.playing {
+  /*background-color: #a2e1ed;*/
+  background-color: #3a6c7d;
+  color: ;
+  font-weight: bold;
+}
+
+.playing a {
+  color: #67323c;
+  font-weight: bold;
+}
+
+tr.playing a :hover {
+  color: green;
 }

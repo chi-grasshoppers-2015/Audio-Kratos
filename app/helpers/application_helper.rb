@@ -6,6 +6,7 @@ module ApplicationHelper
       icon_class = css_class == "current asc" ? "fa  fa-chevron-circle-up" : "fa fa-chevron-circle-down"
     end
     direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
+
     link_to playlist_path(id, :sort => column, :direction => direction), {:class => css_class} do
         if icon_class
           raw(title + " <i class='"+ icon_class + "'></i>")
