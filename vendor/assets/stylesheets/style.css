@@ -82,6 +82,10 @@ a, a:hover, a:focus {
   background-color: #6c313a;
 }
 
+
+
+
+
 .bg-theme02 {
   background-color: #ac92ec;
 }
@@ -378,10 +382,13 @@ ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:fo
 }
 
 
+
 ul.sidebar-menu li a i {
     font-size: 15px;
+    padding-left: 6px;
     padding-right: 6px;
 }
+
 
 ul.sidebar-menu li a:hover i, ul.sidebar-menu li a:focus i {
     color: #fff;
@@ -2320,6 +2327,14 @@ audio {
   display:inline-block;
 }
 
+.visual-control {
+  display:inline-block;
+  padding-right: 25px;
+  font-size: 20px;
+  float: right;
+}
+
+
 .more-controls a {
   color: white;
   text-decoration: none;
@@ -2330,6 +2345,23 @@ audio {
   text-decoration: none;
   cursor: default;
 }
+
+.more-controls a:visited {
+  color: white;
+  text-decoration: none;
+  cursor: default;
+}
+
+.visual-control a {
+  color: #6c313a;
+  text-decoration: none;
+}
+
+.visual-control a:hover {
+  color: white;
+  text-decoration: none;
+}
+
 
 .current-art {
   width: 100px;
