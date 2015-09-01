@@ -3,9 +3,7 @@
 
 <% if @open_playlists.any? %>
   <h4>Add your playlist to the event:</h4>
-  <%= form_for @playlistevent, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
-
-    <%= hidden_field_tag(:event_id, params[:id]) %>
+  <%= form_for [@event, @playlistevent] do |f| %>
 
     <%= f.select(:playlist_id) do %>
       <% @open_playlists.each do |playlist| -%>
