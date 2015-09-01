@@ -24,6 +24,8 @@ Controller.prototype = {
       // $(document).on('keyup', this.handleEnd.bind(this))
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
       document.addEventListener('ended', this.nextSong.bind(this), true);
+      // document.addEventListener("webkitfullscreenchange", this.fullScreenHandle.bind(this));
+
   },
 
   loadSongs:
@@ -74,6 +76,14 @@ Controller.prototype = {
         this.canvas.update(this.minimizeDimensions());
       }
   },
+
+  fullScreenHandle:
+    function(){
+      if (this.canvas.maximize){
+        document.webkitExitFullscreen();
+        this.canvas.update(this.minimizeDimensions())
+      }
+    },
 
   mouse:
     function(mouse){
