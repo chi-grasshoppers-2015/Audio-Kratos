@@ -40,9 +40,7 @@ a, a:hover, a:focus {
 }
 
 
-.viewer {
-  text-align: center;
-}
+
 
 #container {
     width: 100%;
@@ -2260,14 +2258,12 @@ table, td, th {
 }
 
 audio {
-  width: 75%;
-  color: #393f51;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #00116C;
 }
 
-.controls {
-  text-align: center;
-  width: 100%;
-}
+
 
 .playing {
   /*background-color: #a2e1ed;*/
@@ -2281,6 +2277,60 @@ audio {
   font-weight: bold;
 }
 
-tr.playing a :hover {
-  color: green;
+.viewer {
+  text-align: center;
+}
+
+.current-data {
+  padding-left: 25px;
+  padding-top: 10px;
+  width: 60%;
+  background-color: #101326;
+  margin: auto;
+}
+
+.current-content {
+  display: inline-block;
+
+}
+
+.current-title {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.current-artist {
+  color: white;
+}
+
+.controls {
+  margin: 0;
+  width: 75%;
+  display:inline-block;
+}
+
+.more-controls {
+  color: white;
+  margin: 0;
+  font-size: 22px;
+  padding: 1px;
+  vertical-align: top;
+  display:inline-block;
+}
+
+.more-controls a {
+  color: white;
+  text-decoration: none;
+}
+
+.more-controls a:hover {
+  color: white;
+  text-decoration: none;
+  cursor: default;
+}
+
+.current-art {
+  width: 100px;
+  height: 100px;
 }

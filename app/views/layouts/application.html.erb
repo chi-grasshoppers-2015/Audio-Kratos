@@ -38,7 +38,7 @@
                           <%= link_to playlist do %>
                             <div class='task-info'>
                               <div class='desc'>
-                                <%= playlist.name %>
+                                <%= playlist.name.upcase %>
                               </div>
                             </div>
                           <% end %>
@@ -74,7 +74,7 @@
                       </a>
                         <ul class="sub sub-menu-items">
                           <% current_user.playlists.each do |playlist| %>
-                            <li><%= link_to playlist.name, playlist %></li>
+                            <li><%= link_to playlist.name.upcase, playlist %></li>
                           <% end %>
 
                           <li>
