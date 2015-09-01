@@ -114,7 +114,7 @@ Controller.prototype = {
 
   handleEsc:
     function(event){
-      if(event.keyCode == 27) {
+      if(event.keyCode == 27 && this.canvas.maximize) {
         this.handleEnd
       }
   },

@@ -12,27 +12,27 @@
 </div>
 
 
-<div class="col-md-12 mt">
-  <div class="content-panel">
-    <table class="table table-hover playlist-table">
-      <h4><%= @playlist.name %></h4>
-      <hr>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th><%= sortable "title" %></th>
-          <th><%= sortable "artist" %></th>
-          <th><%= sortable "album" %></th>
-          <th><%= sortable "track" %></th>
-          <th><%= sortable "genre" %></th>
-        </tr>
-      </thead>
-      <tbody>
+ <div class="col-md-12 mt">
+    <div class="content-panel">
+      <table class="table table-hover playlist-table">
+        <h4><%= @playlist.name %></h4>
+          <hr>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th><%= sortable "artist", @playlist.id%></th>
+                <th><%= sortable "album", @playlist.id %></th>
+                <th><%= sortable "track", @playlist.id %></th>
+                <th><%= sortable "genre", @playlist.id %></th>
+              </tr>
+            </thead>
+            <tbody>
          <%= render partial: "playlist" %>
       </tbody>
     </table>
   </div>
 </div>
+
 
 <script>
   $(document).ready(function() {
