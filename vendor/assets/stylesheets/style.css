@@ -2310,6 +2310,7 @@ audio {
   display:inline-block;
 }
 
+
 .more-controls {
   color: white;
   margin: 0;
@@ -2333,4 +2334,10 @@ audio {
 .current-art {
   width: 100px;
   height: 100px;
+}
+
+input[value="Logout"] {
+  background: none;
+  border: none;
+
 }
