@@ -5,6 +5,13 @@ Rails.application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create]
   resources :playlists, only: [:index, :show]
+  resources :events do
+    resources :playlist_events
+  end
+
+
+
+  #only: [:new, :create, :index, :show, :edit, :update, :destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
