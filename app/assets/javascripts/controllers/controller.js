@@ -81,7 +81,12 @@ Controller.prototype = {
 
   addAudioSrc:
     function(url) {
+      if(this.audio.context){
+        this.audio.updateAudioSrc(url);
+      }
+      else {
       this.audio.init(url);
+      };
   },
 
   resetCanvas:

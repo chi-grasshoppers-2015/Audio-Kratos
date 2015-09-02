@@ -20,6 +20,11 @@ AudioPlayer.prototype = {
 
   },
 
+  updateAudioSrc:
+    function(url){
+      this.context.close().then(this.init(url));
+  },
+
   dataStream:
     function(){
       this.analyser.fftSize = 2048;
