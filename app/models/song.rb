@@ -32,7 +32,7 @@ class Song < ActiveRecord::Base
   end
 
   def update_vote_count
-    self.net_votes = self.votes.map(&:value).reduce(:+)
+    self.update_attributes(net_votes: self.votes.map(&:value).reduce(:+))
   end
 
   def clear_votes
