@@ -1,11 +1,21 @@
 class UsersController < ApplicationController
 
   def index
-    @users = User.all
+    @user = User.find(1)
+    if request.xhr?
+      render json: @user.first_name
+    else
+      @users = User.all
+    end
   end
 
   def new
-    @user = User.new
+    @user = User.find(1)
+    if request.xhr?
+      render json: @user
+    else
+      @user = User.new
+    end
   end
 
   def create

@@ -1,4 +1,4 @@
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.10.2.js"></script> -->
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 
 <!-- <script src="https://localhost:3030/socket.io/socket.io.js"></script>  -->
@@ -36,7 +36,8 @@
 <hr>
 <hr>
 <hr>
-<button>Click event to websocket port</button>
+<button class='ajax'>ajax text</button>
+<h1 class="ajaxname"><%= @name %></h1>
 <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -54,17 +55,56 @@ $(document).ready(function(){
   // $('button').on("click", function(){
   //   socket.emit('chat message', "BUTTON WAS CLICKED!")
   // });
-  $('form').submit(function(){
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
-    return false;
+  // $('form').submit(function(){
+  //   socket.emit('chat message', $('#m').val());
+  //   $('#m').val('');
+  //   return false;
+  // });
+
+
+  $('.ajax').on("click", function(){
+    socket.emit('ajaxsend', "I made an ajax call")
   });
+
+
+  // callbacks from server
+  socket.on('ajaxreturn', function(msg){
+    console.log(msg)
+    ajaxify();
+  });
+
+
+
+
   socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
+
+
+
+  socket.on('get_songs', function(msg){
     $('#messages').append($('<li>').text(msg));
   });
   // socket.on('chat message', function(response){
   //   console.log(response)
   // });
+var ajaxify = function(){
+  var request = $.ajax({
+    url: '/',
+    method: 'GET'
+  })
+  request.error(function( jqXHR, textStatus, errorThrown ) { console.log(errorThrown); })
+  request.done(function(response){
+    console.log("AJAXED")
+    updatename(response.first_name);
+  });
+}
+
+var updatename = function(response){
+  $(".ajaxname").html(response)
+}
+
 })
+
 
 </script>

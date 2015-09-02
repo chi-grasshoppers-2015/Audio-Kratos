@@ -5,59 +5,36 @@ var io = require('socket.io')(http);
 // app.get('/', function(req, res){
 //   res.send('Hello world');
 // });
-
+var users = []
 http.listen(3030, function(){
   console.log('listening on *:3030');
 });
 
 io.on('connection', function(socket){
   console.log('a user connected');
+  users.push("user")
+  console.log("current count:" + users.length)
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
     //## only returns first line, makes sense
     // console.log('message: ' + msg);
     // console.log("no emit?")
   });
+
+  socket.on('ajaxsend', function(msg){
+  	console.log(msg)
+  	io.emit('ajaxreturn', "Ajax Returned")
+  })
+
+
+
+
+
   socket.on('disconnect', function(){
     console.log('user disconnected');
+    users.pop()
+  	console.log("current count:" + users.length)
   });
 
 });
 
-// var http = require("http");
-// var url = require('url');
-// var fs = require('fs');
-// var io = require('socket.io');
-
-// var server = http.createServer(function(request, response){
-//     console.log('Connection');
-//     var path = url.parse(request.url).pathname;
-
-//     switch(path){
-//         case '/':
-//             response.writeHead(200, {'Content-Type': 'text/html'});
-//             response.write('hello world');
-//             break;
-//         case 'socket.html':
-//             fs.readFile(__dirname + path, function(error, data){
-//                 if (error){
-//                     response.writeHead(404);
-//                     response.write("opps this doesn't exist - 404");
-//                 }
-//                 else{
-//                     response.writeHead(200, {"Content-Type": "text/html"});
-//                     response.write(data, "utf8");
-//                 }
-//             });
-//             break;
-//         default:
-//             response.writeHead(404);
-//             response.write("opps this doesn't exist - 404");
-//             break;
-//     }
-//     response.end();
-// });
-
-// server.listen(3030);
-
-// io.listen(server);
