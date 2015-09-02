@@ -35,12 +35,12 @@
           <hr>
             <thead>
               <tr>
-                <th>#</th>
-                <th><%= sortable "song", @playlist.id%></th>
-                <th><%= sortable "artist", @playlist.id%></th>
-                <th><%= sortable "album", @playlist.id %></th>
-                <th><%= sortable "track", @playlist.id %></th>
-                <th><%= sortable "genre", @playlist.id %></th>
+                <th class="col-md-1">#</th>
+                <th class="col-md-3"><%= sortable "song", @playlist.id%></th>
+                <th class="col-md-2"><%= sortable "artist", @playlist.id%></th>
+                <th class="col-md-3"><%= sortable "album", @playlist.id %></th>
+                <th class="col-md-1"><%= sortable "track", @playlist.id %></th>
+                <th class="col-md-2"><%= sortable "genre", @playlist.id %></th>
               </tr>
             </thead>
             <tbody>

@@ -1,7 +1,7 @@
 <h1>Upload a file</h1>
 <%= form_tag songs_path, enctype: 'multipart/form-data' do %>
-  <%= file_field_tag :file  %>
-  <%= submit_tag 'Upload file' %>
+  <%= file_field_tag :file %>
+  <%= submit_tag 'Upload file', class: "submitbutton" %>
 <% end %>
 
 <h1>All songs</h1>
@@ -27,7 +27,7 @@
       <td><%= song.album %></td>
       <td><%= song.track %></td>
       <td><%= song.genre %></td>
-      <td><%= button_to "Delete", song, method: :delete, form_class: "logout" %></td>
+      <td><%= button_to "Delete", song, method: :delete, class: "submitbutton" %></td>
     </tr>
   <% end %>
   </tbody>
