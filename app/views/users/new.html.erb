@@ -1,3 +1,9 @@
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+<!-- <script src="https://localhost:3030/socket.io/socket.io.js"></script>  -->
+
+
 <h1>Sign Up</h1>
 <% if @user && @user.errors.any? %>
 
@@ -26,3 +32,39 @@
   <input type="password" name="user[password]"></input><br><br>
   <%= submit_tag("Sign up") %>
 <% end %>
+
+<hr>
+<hr>
+<hr>
+<button>Click event to websocket port</button>
+<ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+
+<script>
+$(document).ready(function(){
+
+  var socket = io.connect('localhost:3030');
+  // socket.on('connect', function(data) {
+  //        socket.emit('join', 'Hello World from client');
+  //    });
+
+  // Button applies to chat as well
+  // $('button').on("click", function(){
+  //   socket.emit('chat message', "BUTTON WAS CLICKED!")
+  // });
+  $('form').submit(function(){
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+  socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
+  // socket.on('chat message', function(response){
+  //   console.log(response)
+  // });
+})
+
+</script>
