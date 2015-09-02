@@ -22,20 +22,19 @@ class SongsController < ApplicationController
 
     @song.create_s3
 
-    TagLib::MPEG::File.open(file.path) do |fileref|
-      unless fileref.nil?
-        tag = fileref.id3v2_tag
-        images = ALBUMART.search("#{tag.artist}", "#{tag.album}", [:medium, :large])
+
+
+    mfile = File.open(file.path, "rb")
+    tag = ID3Tag.read(mfile)
+    images = ALBUMART.search("#{tag.artist}", "#{tag.album}", [:medium, :large])
         @song.assign_attributes(  artist: tag.artist,
                                   album: tag.album,
-                                  track: tag.track,
+                                  track: tag.track_nr,
                                   title: tag.title,
                                   genre: tag.genre,
                                   release_year: tag.year,
                                   album_url: images[:images][:medium]
                                 )
-      end
-    end
 
     if @song.save
       playlist = Playlist.find_by(owner_id: current_user.id, name: "All songs")
