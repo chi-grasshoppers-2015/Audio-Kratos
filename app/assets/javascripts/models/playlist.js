@@ -6,8 +6,8 @@ var Playlist = function(){
 Playlist.prototype = {
 
   createSong:
-    function(url, title, artist, album, track, genre, art, netVotes){
-      song = Song.new(url, title, artist, album, track, genre, art, netVotes);
+    function(id, url, title, artist, album, track, genre, art, netVotes){
+      song = Song.new(id, url, title, artist, album, track, genre, art, netVotes);
   },
 
   currentSongIndex:

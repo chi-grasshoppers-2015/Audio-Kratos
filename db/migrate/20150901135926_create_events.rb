@@ -5,6 +5,7 @@ class CreateEvents < ActiveRecord::Migration
       t.integer :owner_id, null: false
       t.datetime :start
       t.datetime :finish
+      t.integer :current_song_id
 
       t.timestamps null: false
     end

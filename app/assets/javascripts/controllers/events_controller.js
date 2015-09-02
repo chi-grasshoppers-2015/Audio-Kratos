@@ -1,8 +1,9 @@
-var Controller = function (){
+var EventsController = function (id){
+  this.eventId = id
   this.canvas = new Canvas(this.minimizeDimensions());
 };
 
-Controller.prototype = {
+EventsController.prototype = {
   init:
     function() {
       this.bindEvents();
@@ -53,10 +54,43 @@ Controller.prototype = {
   updateSong:
     function(event){
       this.playlist.changeSong(event);
-      this.playlistView.currentlyPlaying(this.playlist.currentSong)
+      this.playlistView.currentlyPlaying(this.playlist.currentSong);
       this.addAudioSrc(this.playlist.currentSong.url);
-
+      this.ajaxUpdateCurrent(this.playlist.currentSong.id);
       $("audio").trigger("play");
+  },
+
+  ajaxUpdateCurrent:
+    function(id){
+      var currentSong = {"current_song_id": id}
+      var url = "/events/" + this.eventId
+
+      var token = $('meta[name="csrf-token"]').attr("content")
+      var request = $.ajax({
+          dataType: "json",
+          type: "PUT",
+          url: url,
+          data: (currentSong),
+          headers: {
+            'X-CSRF-Token': token
+          }
+        })
+
+    request.done(function(response) {
+      console.log("done")
+      console.log(response)
+    });
+    request.fail(function(response) {
+      console.log(response.error)
+      console.log("fail")
+    });
+    request.always(function() {
+      console.log("always")
+    })
+
+
+      // request.setRequestHeader('X-CSRF-Token', token);
+
   },
 
   nextSong:
@@ -69,7 +103,6 @@ Controller.prototype = {
   prevSong:
     function(event){
       event.preventDefault();
-      console.log("HERE")
       $("a[data-index="+(parseInt(this.playlist.currentSongIndex())-1)+"]").click();
       $("audio").trigger("play");
   },

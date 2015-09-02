@@ -4,6 +4,10 @@ class Event < ActiveRecord::Base
 
   has_many :songs, through: :playlists
 
+  belongs_to :owner, class_name: "User"
+
+  belongs_to :current_song, class_name: "Song"
+
   def as_json(opts={})
     opts[:whatever]
     hash = super(opts)
