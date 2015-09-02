@@ -23,7 +23,6 @@ class EventsController < ApplicationController
     @playlistevent = PlaylistEvent.new
     @vote = Vote.new
     @my_event = current_user.id == @event.owner_id
-
     @songs = @event.songs
 
     # use the current song id from the event to find the current song
@@ -43,21 +42,26 @@ class EventsController < ApplicationController
   end
 
   def update
-    # @event = Event.find(params[:id])
-    # @event.assign_attributes(event_params)
+    @event = Event.find(params[:id])
+    @vote = Vote.new
+    @songs = @event.songs
+    @all_songs = @songs
+    @event.assign_attributes(event_params)
+    if @event.save
+      # use the current song id from the event to find the current song
+      if @event.current_song
+        @current_song = @event.current_song
+        # subtract out the current song from the songs list
+        @songs = @songs - [@current_song]
+        @all_songs = [@current_song] + @songs
+      end
 
-    object = {
-     "name" => 'Hello'
-    }
+    end
 
     if request.xhr?
-      render json: object.to_json
+      render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false), :songs => @all_songs }
+      # render partial: "event_rows"
     end
-    # if @event.save
-
-    # else
-
-    # end
 
   end
 

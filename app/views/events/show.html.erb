@@ -84,7 +84,6 @@
     eController.init();
 
     var songs = <%= @songs.to_json({}).html_safe %>
-
     eController.loadSongs(songs);
 
     $('a.song-link').first().click();

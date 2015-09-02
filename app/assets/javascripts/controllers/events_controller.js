@@ -30,11 +30,11 @@ EventsController.prototype = {
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
       document.addEventListener('ended', this.nextSong.bind(this), true);
       // document.addEventListener("webkitfullscreenchange", this.fullScreenHandle.bind(this));
-
   },
 
   loadSongs:
     function(songs){
+      this.playlist.songs = [];
       for(var i=0; i < songs.length; i++){
         song = new Song(  songs[i].id,
                           songs[i].s3_url,
@@ -51,45 +51,61 @@ EventsController.prototype = {
       }
   },
 
+  loadFromTable:
+    function(){
+
+      // identify the table in the Dom
+
+      // loop through the table to pull the data from each
+
+
+    },
+
+
   updateSong:
     function(event){
       this.playlist.changeSong(event);
       this.playlistView.currentlyPlaying(this.playlist.currentSong);
       this.addAudioSrc(this.playlist.currentSong.url);
-      this.ajaxUpdateCurrent(this.playlist.currentSong.id);
+      this.ajaxUpdateCurrent(this.playlist.currentSong.id)
+
+
       $("audio").trigger("play");
   },
 
   ajaxUpdateCurrent:
     function(id){
-      var currentSong = {"current_song_id": id}
+      var currentSong = {"event": {"current_song_id": id}}
       var url = "/events/" + this.eventId
 
+      var newSongOrder;
       var token = $('meta[name="csrf-token"]').attr("content")
+
       var request = $.ajax({
-          dataType: "json",
-          type: "PUT",
-          url: url,
-          data: (currentSong),
-          headers: {
-            'X-CSRF-Token': token
-          }
-        })
+        // dataType: "json",
+        type: "PUT",
+        url: url,
+        data: (currentSong),
+        headers: {
+          'X-CSRF-Token': token
+        }
+      })
 
-    request.done(function(response) {
-      console.log("done")
-      console.log(response)
-    });
-    request.fail(function(response) {
-      console.log(response.error)
-      console.log("fail")
-    });
-    request.always(function() {
-      console.log("always")
-    })
+      var self = this;
+      request.done(function(response) {
+        $('tbody').html(response["attachmentPartial"])
+        newSongOrder = response["songs"]
+        console.log("done")
+        self.loadSongs(newSongOrder);
+      })
 
+      // this.loadSongs(newSongOrder)
+        // console.log(newSongOrder)
+      // console.log("here" + newSongOrder)
+      // modify the load songs method to pull from the rendered table
 
-      // request.setRequestHeader('X-CSRF-Token', token);
+      // use the data from the song in the rendered table to identify the song(when we
+        //  need it on the back end)
 
   },
 
