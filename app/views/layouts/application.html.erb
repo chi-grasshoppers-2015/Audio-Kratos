@@ -18,7 +18,7 @@
               <div class="sidebar-toggle-box">
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
               </div>
-            <a href="index.html" class="logo"><b>AUDI-O-KRATOS</b></a>
+            <a href="index.html" class="logo"><b>AUDIO-KRATOS</b></a>
             <div class="nav notify-row" id="top_menu">
                 <ul class="nav top-menu">
                   <% if logged_in? %>
@@ -60,26 +60,28 @@
       <aside>
           <div id="sidebar"  class="nav-collapse ">
               <ul class="sidebar-menu" id="nav-accordion">
+                <p class="centered">
+                  <a href="profile.html">
+                    <%= image_tag("lincoln.png", size: "60x60", class: "img-circle") %>
+                  </a>
+                </p>
+                <% if logged_in? %>
+                  <h5 class="centered"><%= current_user.first_name.upcase %></h5>
 
-                  <p class="centered"><a href="profile.html"><img src="http://puu.sh/jU451/1c9729bbeb.png" class="img-circle" width="60"></a></p>
-
-                  <% if logged_in? %>
-                    <h5 class="centered"><%= current_user.first_name.upcase %></h5>
-
-                    <li class="sub-menu">
-                      <a href="javascript:;" class="sub-menu-title" >
-                        <i class="fa fa-list-ul"></i>
-                        <span>Playlists</span>
-                      </a>
+                  <li class="sub-menu">
+                    <a href="javascript:;" class="sub-menu-title" >
+                      <i class="fa fa-list-ul"></i>
+                      <span>Playlists</span>
+                    </a>
                         <ul class="sub sub-menu-items">
                           <% current_user.playlists.each do |playlist| %>
                             <li><%= link_to playlist.name.upcase, playlist %></li>
                           <% end %>
 
                           <li>
-                            <a  href="#">
-                             <span class="badge"><i class="fa fa-plus"></i></span>
-                            </a>
+                            <%= link_to songs_path do %>
+                              <span class="badge"><i class="fa fa-plus"></i></span>
+                            <% end %>
                           </li>
 
                       </ul>
@@ -91,14 +93,33 @@
                           <span>Events</span>
                       </a>
                       <ul class="sub sub-menu-items">
-                          <li><a  href="#">Join</a></li>
+                          <li><a href="">Join</a></li>
                           <li>
-                            <a  href="#">
+                            <%= link_to new_event_path do %>
                               <span class="badge"><i class="fa fa-plus"></i></span>
-                            </a>
+                            <% end %>
                           </li>
                       </ul>
                   </li>
+                  <% else %>
+                  <h5 class="centered">WELCOME</h5>
+
+                  <li class="sub">
+                    <%= link_to new_user_path, class: "logout" do %>
+                      <i class="fa fa-headphones"></i>
+                      <span>Sign Up</span>
+                    <% end %>
+                  </li>
+
+                    <li class="sub-menu">
+                        <a href="#" class="sub-menu-title">
+                            <i class="fa fa-black-tie"></i>
+                            <span>Events</span>
+                        </a>
+                        <ul class="sub sub-menu-items">
+                            <li><a href="">Join</a></li>
+                        </ul>
+                    </li>
 
                   <% end %>
 
