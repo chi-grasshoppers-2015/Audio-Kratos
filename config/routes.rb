@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :events do
     resources :playlist_events
   end
+  resources :votes
 
 
 

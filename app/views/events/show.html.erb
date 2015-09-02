@@ -62,8 +62,9 @@
           <hr>
             <thead>
               <tr>
+                <th></th>
+                <th></th>
                 <th>Vote Count</th>
-                <th>#</th>
                 <th>Song</th>
                 <th>Artist</th>
                 <th>Album</th>
@@ -74,8 +75,31 @@
             <tbody>
                <% @songs.each_with_index do |song,i| %>
                 <tr>
-                  <td><%= song.net_votes %></td>
-                  <td><%= i + 1 %></td>
+                  <td>
+                      <%= form_for @vote, :html => {:class => "vote-form", :method => "POST"} do |f| %>
+                        <%= f.hidden_field :song_id, :value => song.id %>
+                        <%= f.hidden_field :user_id, :value => session[:user_id] %>
+                        <%= f.hidden_field :event_id, :value => params[:id] %>
+                        <%= f.hidden_field :value, :value => 1 %>
+                        <%= button_tag(type: 'submit', class: "vote-button") do %>
+                            <i class="fa fa-caret-up fa-2x"></i>
+                        <% end %>
+                      <% end %>
+                  </td>
+                  <td>
+                      <%= form_for @vote, :html => {:class => "vote-form", :method => "POST"} do |f| %>
+                        <%= f.hidden_field :song_id, :value => song.id %>
+                        <%= f.hidden_field :user_id, :value => session[:user_id] %>
+                        <%= f.hidden_field :event_id, :value => params[:id] %>
+                        <%= f.hidden_field :value, :value => -1 %>
+                        <%= button_tag(type: 'submit', class: "vote-button") do %>
+                            <i class="fa fa-caret-down fa-2x"></i>
+                        <% end %>
+                      <% end %>
+                  </td>
+                  <td>
+                      <%= song.net_votes %>
+                  </td>
                   <td class="title"><%= link_to song.title ||= "untitled", song.s3_url, :class => "song-link", :data => {index: i} %></td>
                   <td class="artist"><%= song.artist %></td>
                   <td class="album"><%= song.album %></td>
