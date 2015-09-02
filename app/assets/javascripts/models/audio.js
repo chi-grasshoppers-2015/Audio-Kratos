@@ -27,11 +27,13 @@ AudioPlayer.prototype = {
 
   dataStream:
     function(){
-      this.analyser.fftSize = 2048;
-      this.frequencyCount = this.analyser.frequencyBinCount
-      this.binArray = new Uint8Array(this.analyser.frequencyBinCount);
-      this.byteTime = this.analyser.getByteTimeDomainData(this.binArray);
-      this.freqData = this.analyser.getByteFrequencyData(this.binArray);
+      if (this.analyser) {
+        this.analyser.fftSize = 2048;
+        this.frequencyCount = this.analyser.frequencyBinCount
+        this.binArray = new Uint8Array(this.analyser.frequencyBinCount);
+        this.byteTime = this.analyser.getByteTimeDomainData(this.binArray);
+        this.freqData = this.analyser.getByteFrequencyData(this.binArray);
+      };
 
   },
 
