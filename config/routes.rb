@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'users#new'
   delete 'logout' => 'sessions#destroy'
+  get 'about' => 'pages#about'
+
   resources :songs
   resources :users
   resources :sessions, only: [:new, :create]
