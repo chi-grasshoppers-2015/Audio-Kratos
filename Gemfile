@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'aws-sdk'
 gem 'bcrypt'
-gem 'taglib-ruby', :require => 'taglib'
+gem 'id3tag'
 gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'autoprefixer-rails'
 gem 'jquery-ui-rails'
