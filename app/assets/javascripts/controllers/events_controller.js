@@ -22,9 +22,8 @@ EventsController.prototype = {
       $(document).on('click', "canvas", this.handleEnd.bind(this));
       $(document).on('touchstart', "canvas", this.handleStart.bind(this));
       $(document).on('touchend', "canvas", this.handleEsc.bind(this));
-      $(".more-controls").on("click", 'a.forward', this.nextSong.bind(this))
-      $(".more-controls").on("click", 'a.backward', this.prevSong.bind(this))
-      $(".visual-control").on("click", 'a.change', this.changeTheme.bind(this))
+      $(".more-controls").on("click", 'a.forward', this.nextSong.bind(this));
+      $(".visual-control").on("click", 'a.change', this.changeTheme.bind(this));
 
       // $(document).on('keyup', this.handleEnd.bind(this))
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
@@ -68,8 +67,6 @@ EventsController.prototype = {
       this.playlistView.currentlyPlaying(this.playlist.currentSong);
       this.addAudioSrc(this.playlist.currentSong.url);
       this.ajaxUpdateCurrent(this.playlist.currentSong.id)
-
-
       $("audio").trigger("play");
   },
 
@@ -98,22 +95,13 @@ EventsController.prototype = {
         console.log("done")
         self.loadSongs(newSongOrder);
       })
-
-      // this.loadSongs(newSongOrder)
-        // console.log(newSongOrder)
-      // console.log("here" + newSongOrder)
-      // modify the load songs method to pull from the rendered table
-
-      // use the data from the song in the rendered table to identify the song(when we
-        //  need it on the back end)
-
   },
 
   nextSong:
     function(event){
       event.preventDefault();
-      $("a[data-index="+(parseInt(this.playlist.currentSongIndex())+1)+"]").click();
-      $("audio").trigger("play");
+      $("a[data-index="+(parseInt(this.playlist.currentSongIndex())+2)+"]").click();
+     $("audio").trigger("play");
   },
 
   prevSong:

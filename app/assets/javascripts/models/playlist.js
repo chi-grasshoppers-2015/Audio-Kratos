@@ -39,7 +39,6 @@ Playlist.prototype = {
       // select the corresponding song in the array with choose song
       // set the new current song to this new selected song
       this.currentSong = this.chooseSong(index);
-
   },
 
 
