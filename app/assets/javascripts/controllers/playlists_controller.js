@@ -13,14 +13,12 @@ PlaylistsController.prototype = {
   bindEvents:
     function(){
       $('thead').on('click', 'th a', this.columnSort.bind(this));
-      $('table').on('click','.vote-button', this.updateTablebyVotes.bind(this));
+      // $('table').on('click','.vote-button', this.updateTablebyVotes.bind(this));
   },
 
   updateTablebyVotes:
     function(event){
       event.preventDefault();
-      console.log("made it into the js vote section")
-
       this.plModel.songs.sort(this.compareOnKey("netVotes"))
       this.plView.updateEventTable(this.plModel.songs);
       this.plView.updatePlayingRow(this.plModel.currentSongIndex());

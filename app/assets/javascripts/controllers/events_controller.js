@@ -1,8 +1,9 @@
-var Controller = function (){
+var EventsController = function (id){
+  this.eventId = id
   this.canvas = new Canvas(this.minimizeDimensions());
 };
 
-Controller.prototype = {
+EventsController.prototype = {
   init:
     function() {
       this.bindEvents();
@@ -21,19 +22,19 @@ Controller.prototype = {
       $(document).on('click', "canvas", this.handleEnd.bind(this));
       $(document).on('touchstart', "canvas", this.handleStart.bind(this));
       $(document).on('touchend', "canvas", this.handleEsc.bind(this));
-      $(".more-controls").on("click", 'a.forward', this.nextSong.bind(this))
-      $(".more-controls").on("click", 'a.backward', this.prevSong.bind(this))
-      $(".visual-control").on("click", 'a.change', this.changeTheme.bind(this))
+      $(".more-controls").on("click", 'a.forward', this.nextSong.bind(this));
+      $(".visual-control").on("click", 'a.change', this.changeTheme.bind(this));
+      $(document).on('click', ".vote", this.voteOn.bind(this));
 
       // $(document).on('keyup', this.handleEnd.bind(this))
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
       document.addEventListener('ended', this.nextSong.bind(this), true);
       // document.addEventListener("webkitfullscreenchange", this.fullScreenHandle.bind(this));
-
   },
 
   loadSongs:
     function(songs){
+      this.playlist.songs = [];
       for(var i=0; i < songs.length; i++){
         song = new Song(  songs[i].id,
                           songs[i].s3_url,
@@ -50,26 +51,80 @@ Controller.prototype = {
       }
   },
 
+
   updateSong:
     function(event){
       this.playlist.changeSong(event);
-      this.playlistView.currentlyPlaying(this.playlist.currentSong)
+      this.playlistView.currentlyPlaying(this.playlist.currentSong);
       this.addAudioSrc(this.playlist.currentSong.url);
-
+      this.ajaxUpdateCurrent(this.playlist.currentSong.id)
       $("audio").trigger("play");
+  },
+
+  ajaxUpdateCurrent:
+    function(id){
+      var currentSong = {"event": {"current_song_id": id}}
+      var url = "/events/" + this.eventId
+
+      var newSongOrder;
+      var token = $('meta[name="csrf-token"]').attr("content")
+
+      var request = $.ajax({
+        // dataType: "json",
+        type: "PUT",
+        url: url,
+        data: (currentSong),
+        headers: {
+          'X-CSRF-Token': token
+        }
+      })
+
+      var self = this;
+      request.done(function(response) {
+        $('tbody').html(response["attachmentPartial"])
+        newSongOrder = response["songs"]
+        self.loadSongs(newSongOrder);
+      })
+  },
+
+  voteOn:
+    function(event){
+      event.preventDefault();
+      var form = $(event.target).parent($("form"))
+      var children = form.children()
+      var songID = $(children[2]).attr('value')
+      var voterID = $(children[3]).attr('value')
+      var value = $(children[5]).attr('value')
+      var token = $('meta[name="csrf-token"]').attr("content")
+      var data = {"vote": {"event_id": this.eventId, "song_id": songID, "value": value, "user_id": voterID }}
+      var url = "/votes"
+      var request = $.ajax({
+        type: "POST",
+        url: url,
+        data: (data),
+        headers: {
+          'X-CSRF-Token': token
+        }
+      })
+
+      var self = this;
+      request.done(function(response) {
+        $('tbody').html(response["attachmentPartial"])
+        newSongOrder = response["songs"]
+        self.loadSongs(newSongOrder);
+      })
   },
 
   nextSong:
     function(event){
       event.preventDefault();
-      $("a[data-index="+(parseInt(this.playlist.currentSongIndex())+1)+"]").click();
-      $("audio").trigger("play");
+      $("a[data-index="+(parseInt(this.playlist.currentSongIndex())+2)+"]").click();
+     $("audio").trigger("play");
   },
 
   prevSong:
     function(event){
       event.preventDefault();
-      console.log("HERE")
       $("a[data-index="+(parseInt(this.playlist.currentSongIndex())-1)+"]").click();
       $("audio").trigger("play");
   },

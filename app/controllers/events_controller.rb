@@ -21,10 +21,48 @@ class EventsController < ApplicationController
     @my_playlists = Playlist.where(owner_id: session[:user_id])
     @open_playlists = @my_playlists - @event_playlists
     @playlistevent = PlaylistEvent.new
-    @songs = @event.songs
     @vote = Vote.new
     @my_event = current_user.id == @event.owner_id
+    @songs = @event.songs
 
+    # use the current song id from the event to find the current song
+    if @event.current_song
+      @current_song = @event.current_song
+      # subtract out the current song from the songs list
+      @songs = @songs - [@current_song]
+    end
+
+    # sort the rest of the songs descending by net vote total
+
+
+
+    # push the current song to the front of the list
+
+
+  end
+
+  def update
+    @event = Event.find(params[:id])
+    @vote = Vote.new
+    @songs = @event.songs
+    @all_songs = @songs
+    @event.assign_attributes(event_params)
+    if @event.save
+      # use the current song id from the event to find the current song
+      if @event.current_song
+        @current_song = @event.current_song
+        # subtract out the current song from the songs list
+        @songs = @songs - [@current_song]
+        @songs.shuffle!
+        @all_songs = [@current_song] + @songs
+      end
+
+    end
+
+    if request.xhr?
+      render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false), :songs => @all_songs }
+      # render partial: "event_rows"
+    end
 
   end
 
@@ -35,7 +73,7 @@ class EventsController < ApplicationController
   private
 
     def event_params
-      params.require(:event).permit(:name, :owner_id, :start, :finish)
+      params.require(:event).permit(:name, :owner_id, :start, :finish, :current_song_id)
     end
 
 end

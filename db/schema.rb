@@ -17,12 +17,13 @@ ActiveRecord::Schema.define(version: 20150901212658) do
   enable_extension "plpgsql"
 
   create_table "events", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.integer  "owner_id",   null: false
+    t.string   "name",            null: false
+    t.integer  "owner_id",        null: false
     t.datetime "start"
     t.datetime "finish"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "current_song_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "playlist_associations", force: :cascade do |t|

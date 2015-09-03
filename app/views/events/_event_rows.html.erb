@@ -1,0 +1,45 @@
+<% if @current_song %>
+  <tr class = "playing">
+    <td class = "col-md-1"></td>
+      <td class = "col-md-1"></td>
+      <td class="col-md-1"></td>
+      <td class="title col-md-3"><%= link_to @current_song.title ||= "untitled", @current_song.s3_url, :class => "song-link", :data => {index: 0} %></td>
+      <td class="artist col-md-2"><%= @current_song .artist %></td>
+      <td class="album col-md-3"><%= @current_song .album %></td>
+    </tr>
+  </tr>
+<% end %>
+
+<% @songs.each_with_index do |song,i| %>
+    <% i += 1 if @current_song %>
+  <tr>
+    <td class = "col-md-1">
+        <%= form_for @vote, :html => {:class => "vote-form", :method => "POST"} do |f| %>
+          <%= f.hidden_field :song_id, :value => song.id %>
+          <%= f.hidden_field :user_id, :value => session[:user_id] %>
+          <%= f.hidden_field :event_id, :value => params[:id] %>
+          <%= f.hidden_field :value, :value => 1 %>
+          <%= button_tag(type: 'submit', class: "vote-button vote") do %>
+              <i class="fa fa-caret-up upcaret fa-2x"></i>
+          <% end %>
+        <% end %>
+    </td>
+    <td class = "col-md-1">
+        <%= form_for @vote, :html => {:class => "vote-form", :method => "POST"} do |f| %>
+          <%= f.hidden_field :song_id, :value => song.id %>
+          <%= f.hidden_field :user_id, :value => session[:user_id] %>
+          <%= f.hidden_field :event_id, :value => params[:id] %>
+          <%= f.hidden_field :value, :value => -1 %>
+          <%= button_tag(type: 'submit', class: "vote-button vote") do %>
+              <i class="fa fa-caret-down fa-2x"></i>
+          <% end %>
+        <% end %>
+    </td>
+    <td class="col-md-1">
+        <%= song.net_votes %>
+    </td>
+    <td class="title col-md-3"><%= link_to song.title ||= "untitled", song.s3_url, :class => "song-link", :data => {index: i} %></td>
+    <td class="artist col-md-2"><%= song.artist %></td>
+    <td class="album col-md-3"><%= song.album %></td>
+  </tr>
+<% end %>

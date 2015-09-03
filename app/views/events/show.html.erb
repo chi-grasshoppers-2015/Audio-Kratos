@@ -71,38 +71,7 @@
               </tr>
             </thead>
             <tbody>
-               <% @songs.each_with_index do |song,i| %>
-                <tr>
-                  <td class = "col-md-1">
-                      <%= form_for @vote, :html => {:class => "vote-form", :method => "POST"} do |f| %>
-                        <%= f.hidden_field :song_id, :value => song.id %>
-                        <%= f.hidden_field :user_id, :value => session[:user_id] %>
-                        <%= f.hidden_field :event_id, :value => params[:id] %>
-                        <%= f.hidden_field :value, :value => 1 %>
-                        <%= button_tag(type: 'submit', class: "vote-button") do %>
-                            <i class="fa fa-caret-up fa-2x"></i>
-                        <% end %>
-                      <% end %>
-                  </td>
-                  <td class = "col-md-1">
-                      <%= form_for @vote, :html => {:class => "vote-form", :method => "POST"} do |f| %>
-                        <%= f.hidden_field :song_id, :value => song.id %>
-                        <%= f.hidden_field :user_id, :value => session[:user_id] %>
-                        <%= f.hidden_field :event_id, :value => params[:id] %>
-                        <%= f.hidden_field :value, :value => -1 %>
-                        <%= button_tag(type: 'submit', class: "vote-button") do %>
-                            <i class="fa fa-caret-down fa-2x"></i>
-                        <% end %>
-                      <% end %>
-                  </td>
-                  <td class="col-md-1">
-                      <%= song.net_votes %>
-                  </td>
-                  <td class="title col-md-3"><%= link_to song.title ||= "untitled", song.s3_url, :class => "song-link", :data => {index: i} %></td>
-                  <td class="artist col-md-2"><%= song.artist %></td>
-                  <td class="album col-md-3"><%= song.album %></td>
-                </tr>
-              <% end %>
+               <%= render partial: "event_rows" %>
             </tbody>
     </table>
   </div>
@@ -111,17 +80,16 @@
 
 <script>
   $(document).ready(function() {
-    var controller = new Controller();
-    controller.init();
+    var eController = new EventsController(<%= @event.id %>);
+    eController.init();
 
     var songs = <%= @songs.to_json({}).html_safe %>
-
-    controller.loadSongs(songs);
+    eController.loadSongs(songs);
 
     $('a.song-link').first().click();
     $("audio").trigger("pause");
 
-    var playlistsController = new PlaylistsController(controller.playlist, controller.playlistView);
+    var playlistsController = new PlaylistsController(eController.playlist, eController.playlistView);
     playlistsController.init();
   });
 </script>
