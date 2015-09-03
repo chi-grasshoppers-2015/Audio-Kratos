@@ -15,20 +15,6 @@
 <% end %>
 
 
-<h5>Contributions:</h5>
-<ul>
-  <% @event_playlists.each do |playlist| %>
-    <li>- <%= playlist.name %> playlist, added by <%= playlist.owner %> </li>
-  <% end %>
-</ul>
-
-<ul>
-<% @songs.each do |song| %>
-  <li><%= song.title %></li>
-<% end %>
-</ul>
-
-
 
 <div class="player">
   <div class="viewer">

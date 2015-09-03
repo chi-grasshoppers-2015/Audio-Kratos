@@ -67,7 +67,22 @@ class EventsController < ApplicationController
   end
 
   def index
-    @my_events = current_user.events
+    if logged_in?
+      @events = Event.all
+    end
+  end
+
+  def destroy
+
+    @event = Event.find(params[:id])
+
+    if (@event)
+      @event.destroy
+      redirect_to events_path
+    else
+      render :text => "No event was found to delete!"
+    end
+
   end
 
   private
