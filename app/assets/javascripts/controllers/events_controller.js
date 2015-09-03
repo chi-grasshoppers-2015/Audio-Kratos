@@ -83,7 +83,6 @@ EventsController.prototype = {
       request.done(function(response) {
         $('tbody').html(response["attachmentPartial"])
         newSongOrder = response["songs"]
-        console.log("done")
         self.loadSongs(newSongOrder);
       })
   },
@@ -98,7 +97,6 @@ EventsController.prototype = {
       var value = $(children[5]).attr('value')
       var token = $('meta[name="csrf-token"]').attr("content")
       var data = {"vote": {"event_id": this.eventId, "song_id": songID, "value": value, "user_id": voterID }}
-      console.log(data)
       var url = "/votes"
       var request = $.ajax({
         type: "POST",
@@ -113,14 +111,8 @@ EventsController.prototype = {
       request.done(function(response) {
         $('tbody').html(response["attachmentPartial"])
         newSongOrder = response["songs"]
-        console.log("done")
         self.loadSongs(newSongOrder);
       })
-  },
-
-  voteDown:
-    function(){
-
   },
 
   nextSong:
