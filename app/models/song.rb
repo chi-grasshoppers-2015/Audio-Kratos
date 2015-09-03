@@ -6,10 +6,6 @@ class Song < ActiveRecord::Base
 
   has_many :votes
 
-  def init
-
-  end
-
   def create_s3
     @bucket = bucket
     @resource = upload_resource

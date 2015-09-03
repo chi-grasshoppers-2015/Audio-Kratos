@@ -21,6 +21,7 @@ class VotesController < ApplicationController
           @current_song = @event.current_song
           @songs = @songs - [@current_song]
           @songs.shuffle!
+          @songs.sort! {|a,b| b.net_votes <=> a.net_votes}
           @all_songs = [@current_song] + @songs
         else
           @all_songs = @event.songs
