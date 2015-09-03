@@ -36,6 +36,7 @@ class EventsController < ApplicationController
 
 
 
+
     # push the current song to the front of the list
 
 
@@ -49,14 +50,23 @@ class EventsController < ApplicationController
     if current_user == @event.owner
       @event.assign_attributes(event_params)
       @event.save
-    end # use the current song id from the event to find the current song
+    end
     if @event.current_song
       @current_song = @event.current_song
-      # subtract out the current song from the songs list
+
       @songs = @songs - [@current_song]
+
       @songs.shuffle!
+
+      @songs.sort! {|a,b| b.net_votes <=> a.net_votes}
+
       @all_songs = [@current_song] + @songs
+
+      @all_songs.each { |song| song.votes.each {|vote| vote.destroy}}
+      @all_songs.each { |song| song.update_attributes(net_votes: 0)}
+
     end
+
 
     if request.xhr?
       if current_user == @event.owner
@@ -72,7 +82,7 @@ class EventsController < ApplicationController
   def index
     if logged_in?
       @events = Event.all
-    end    
+    end
   end
 
   def destroy
@@ -87,7 +97,7 @@ class EventsController < ApplicationController
     end
 
   end
-  
+
   private
 
     def event_params
