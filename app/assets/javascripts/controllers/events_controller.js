@@ -1,7 +1,7 @@
 var EventsController = function (id, guestBoolean){
   this.eventId = id
   this.guest = guestBoolean
-  this.socket = io.connect('localhost:3030')
+  this.socket = io.connect('audio-kratos-websocket.herokuapp.com')
 };
 
 EventsController.prototype = {
@@ -140,7 +140,7 @@ EventsController.prototype = {
   updateAll:
     function(id){
       var token = $('meta[name="csrf-token"]').attr("content")
-      var url = "/tally"
+      var url = "/events/"+id+"/tally"
        var request = $.ajax({
         type: "GET",
         url: url,
