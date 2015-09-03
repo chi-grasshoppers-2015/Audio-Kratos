@@ -1,7 +1,7 @@
 var EventsController = function (id, guestBoolean){
   this.eventId = id
   this.guest = guestBoolean
-  this.socket = io.connect('localhost:3030')
+  this.socket = io.connect('audio-kratos-websocket.herokuapp.com')
 };
 
 EventsController.prototype = {

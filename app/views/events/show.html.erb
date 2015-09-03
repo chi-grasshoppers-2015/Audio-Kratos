@@ -99,6 +99,7 @@
         eController.socket.on('updateSelf', function(eventId){
           eController.updateAll(eventId)
         })
+        eController.socket.emit('tellAllToUpdate', eController.eventId)
 
       var playlistsController = new PlaylistsController(eController.playlist, eController.playlistView);
       playlistsController.init();
