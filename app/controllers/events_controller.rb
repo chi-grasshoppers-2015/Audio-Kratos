@@ -47,10 +47,12 @@ class EventsController < ApplicationController
     @vote = Vote.new
     @songs = @event.songs
     @all_songs = @songs
+
     if current_user == @event.owner
       @event.assign_attributes(event_params)
       @event.save
     end
+
     if @event.current_song
       @current_song = @event.current_song
 
@@ -60,10 +62,13 @@ class EventsController < ApplicationController
 
       @songs.sort! {|a,b| b.net_votes <=> a.net_votes}
 
+      if current_user == @event.owner
+        @all_songs.each { |song| song.votes.each {|vote| vote.destroy}}
+        @all_songs.each { |song| song.update_attributes(net_votes: 0)}
+      end
+
       @all_songs = [@current_song] + @songs
 
-      @all_songs.each { |song| song.votes.each {|vote| vote.destroy}}
-      @all_songs.each { |song| song.update_attributes(net_votes: 0)}
 
     end
 
@@ -75,6 +80,37 @@ class EventsController < ApplicationController
         render :json => { :attachmentPartial => render_to_string('_event_guest_rows', :layout => false), :songs => @all_songs }
       end
       # render partial: "event_rows"
+    end
+
+  end
+
+  def tally
+    @event = Event.find(params[:id])
+    @vote = Vote.new
+    @songs = @event.songs
+    @all_songs = @songs
+
+    if @event.current_song
+      @current_song = @event.current_song
+
+      @songs = @songs - [@current_song]
+
+      @songs.shuffle!
+
+      @songs.sort! {|a,b| b.net_votes <=> a.net_votes}
+
+      @all_songs = [@current_song] + @songs
+
+
+    end
+
+
+    if request.xhr?
+      if current_user == @event.owner
+        render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false), :songs => @all_songs }
+      else
+        render :json => { :attachmentPartial => render_to_string('_event_guest_rows', :layout => false), :songs => @all_songs }
+      end
     end
 
   end
