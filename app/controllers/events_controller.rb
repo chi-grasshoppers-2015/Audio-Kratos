@@ -84,6 +84,37 @@ class EventsController < ApplicationController
 
   end
 
+  def tally
+    @event = Event.find(params[:id])
+    @vote = Vote.new
+    @songs = @event.songs
+    @all_songs = @songs
+
+    if @event.current_song
+      @current_song = @event.current_song
+
+      @songs = @songs - [@current_song]
+
+      @songs.shuffle!
+
+      @songs.sort! {|a,b| b.net_votes <=> a.net_votes}
+
+      @all_songs = [@current_song] + @songs
+
+
+    end
+
+
+    if request.xhr?
+      if current_user == @event.owner
+        render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false), :songs => @all_songs }
+      else
+        render :json => { :attachmentPartial => render_to_string('_event_guest_rows', :layout => false), :songs => @all_songs }
+      end
+    end
+
+  end
+
   def index
     if logged_in?
       @events = Event.all
