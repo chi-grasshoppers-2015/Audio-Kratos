@@ -60,12 +60,11 @@ class EventsController < ApplicationController
 
       @songs.sort! {|a,b| b.net_votes <=> a.net_votes}
 
-
-
-
       @all_songs = [@current_song] + @songs
 
+      @all_songs.each { |song| song.votes.each {|vote| vote.destroy}}
       @all_songs.each { |song| song.update_attributes(net_votes: 0)}
+
     end
 
 
