@@ -25,7 +25,13 @@ class VotesController < ApplicationController
         else
           @all_songs = @event.songs
         end
-        render :json => { :attachmentPartial => render_to_string('events/_event_rows', :layout => false), :songs => @all_songs }
+
+        if current_user == @event.owner
+          render :json => { :attachmentPartial => render_to_string('events/_event_rows', :layout => false), :songs => @all_songs }
+        else
+          render :json => { :attachmentPartial => render_to_string('events/_event_guest_rows', :layout => false), :songs => @all_songs }
+        end
+
       end
     else
       if @vote.save
