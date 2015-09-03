@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  # include SongsHelper
+  include SongsHelper
   # helper_method :sort_column, :sort_direction
 
   def index
@@ -23,17 +23,20 @@ class SongsController < ApplicationController
     @song.create_s3
 
 
-
     mfile = File.open(file.path, "rb")
     tag = ID3Tag.read(mfile)
-    images = ALBUMART.search("#{tag.artist}", "#{tag.album}", [:medium, :large])
-        @song.assign_attributes(  artist: tag.artist,
-                                  album: tag.album,
-                                  track: tag.track_nr,
-                                  title: tag.title,
-                                  genre: tag.genre,
-                                  release_year: tag.year,
-                                  album_url: images[:images][:medium]
+    if tag.artist && tag.album
+      images = ALBUMART.search("#{tag.artist}", "#{tag.album}", [:medium, :large])
+    else
+      images = {:images => {:medium => "untitled"}}
+    end
+        @song.assign_attributes(  artist: sanitize(tag.artist), 
+                                  album: sanitize(tag.album),
+                                  track: sanitize(tag.track_nr),
+                                  title: sanitize(tag.title),
+                                  genre: sanitize_genre(tag.genre),
+                                  release_year: sanitize(tag.year),
+                                  album_url: images[:images][:medium] || "untitled"
                                 )
 
     if @song.save
