@@ -53,6 +53,7 @@ class EventsController < ApplicationController
         @current_song = @event.current_song
         # subtract out the current song from the songs list
         @songs = @songs - [@current_song]
+        @songs.shuffle!
         @all_songs = [@current_song] + @songs
       end
 

@@ -24,6 +24,7 @@ EventsController.prototype = {
       $(document).on('touchend', "canvas", this.handleEsc.bind(this));
       $(".more-controls").on("click", 'a.forward', this.nextSong.bind(this));
       $(".visual-control").on("click", 'a.change', this.changeTheme.bind(this));
+      $(document).on('click', ".vote", this.voteOn.bind(this));
 
       // $(document).on('keyup', this.handleEnd.bind(this))
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
@@ -49,16 +50,6 @@ EventsController.prototype = {
         this.playlist.songs.push(song)
       }
   },
-
-  loadFromTable:
-    function(){
-
-      // identify the table in the Dom
-
-      // loop through the table to pull the data from each
-
-
-    },
 
 
   updateSong:
@@ -95,6 +86,41 @@ EventsController.prototype = {
         console.log("done")
         self.loadSongs(newSongOrder);
       })
+  },
+
+  voteOn:
+    function(event){
+      event.preventDefault();
+      var form = $(event.target).parent($("form"))
+      var children = form.children()
+      var songID = $(children[2]).attr('value')
+      var voterID = $(children[3]).attr('value')
+      var value = $(children[5]).attr('value')
+      var token = $('meta[name="csrf-token"]').attr("content")
+      var data = {"vote": {"event_id": this.eventId, "song_id": songID, "value": value, "user_id": voterID }}
+      console.log(data)
+      var url = "/votes"
+      var request = $.ajax({
+        type: "POST",
+        url: url,
+        data: (data),
+        headers: {
+          'X-CSRF-Token': token
+        }
+      })
+
+      var self = this;
+      request.done(function(response) {
+        $('tbody').html(response["attachmentPartial"])
+        newSongOrder = response["songs"]
+        console.log("done")
+        self.loadSongs(newSongOrder);
+      })
+  },
+
+  voteDown:
+    function(){
+
   },
 
   nextSong:
