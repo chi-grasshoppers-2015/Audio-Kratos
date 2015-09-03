@@ -46,9 +46,19 @@ class EventsController < ApplicationController
     @vote = Vote.new
     @songs = @event.songs
     @all_songs = @songs
-    @event.assign_attributes(event_params)
-    if @event.save
-      # use the current song id from the event to find the current song
+    if current_user == @event.owner
+      @event.assign_attributes(event_params)
+      if @event.save
+        # use the current song id from the event to find the current song
+        if @event.current_song
+          @current_song = @event.current_song
+          # subtract out the current song from the songs list
+          @songs = @songs - [@current_song]
+          @songs.shuffle!
+          @all_songs = [@current_song] + @songs
+        end
+      end
+    else
       if @event.current_song
         @current_song = @event.current_song
         # subtract out the current song from the songs list
@@ -56,11 +66,14 @@ class EventsController < ApplicationController
         @songs.shuffle!
         @all_songs = [@current_song] + @songs
       end
-
     end
 
     if request.xhr?
-      render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false), :songs => @all_songs }
+      if current_user == @event.owner
+        render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false), :songs => @all_songs }
+      else
+        render :json => { :attachmentPartial => render_to_string('_event_guest_rows', :layout => false), :songs => @all_songs }
+      end
       # render partial: "event_rows"
     end
 

@@ -1,11 +1,13 @@
-var EventsController = function (id){
+var EventsController = function (id, guestBoolean){
   this.eventId = id
-  this.canvas = new Canvas(this.minimizeDimensions());
+  this.guest = guestBoolean
+  // this.socket = io.connect('audio-kratos-webserver.herokuapp.com')
 };
 
 EventsController.prototype = {
   init:
     function() {
+      this.canvas = new Canvas(this.minimizeDimensions());
       this.bindEvents();
       this.audio = new AudioPlayer();
       this.playlist = new Playlist();
@@ -13,10 +15,15 @@ EventsController.prototype = {
       setInterval(this.conduct.bind(this), 17)
   },
 
+  initGuest() {
+    this.bindGuestEvents();
+    this.playlist = new Playlist();
+    this.playlistView = new PlaylistView();
+  },
+
   bindEvents:
     function(){
       window.addEventListener('resize', this.resetCanvas.bind(this));
-      // window.addEventListener('orientationchange', this.resetCanvas.bind(this))
 
       $(document).on('mousemove', this.mouse);
       $(document).on('click', "canvas", this.handleEnd.bind(this));
@@ -26,10 +33,17 @@ EventsController.prototype = {
       $(".visual-control").on("click", 'a.change', this.changeTheme.bind(this));
       $(document).on('click', ".vote", this.voteOn.bind(this));
 
-      // $(document).on('keyup', this.handleEnd.bind(this))
       $(document).on('click', 'a.song-link', this.updateSong.bind(this));
       document.addEventListener('ended', this.nextSong.bind(this), true);
-      // document.addEventListener("webkitfullscreenchange", this.fullScreenHandle.bind(this));
+
+  },
+
+  bindGuestEvents:
+    function(){
+      $(document).on('click', ".vote", this.voteOn.bind(this));
+      $(document).on('click', 'a.song-link', this.updateSong.bind(this));
+      document.addEventListener('ended', this.nextSong.bind(this), true);
+
   },
 
   loadSongs:
@@ -84,6 +98,11 @@ EventsController.prototype = {
         $('tbody').html(response["attachmentPartial"])
         newSongOrder = response["songs"]
         self.loadSongs(newSongOrder);
+
+        if(self.guest == false){
+          console.log("hello")
+          self.socket.emit('tellGuestsToUpdate', id);
+        }
       })
   },
 
