@@ -73,14 +73,28 @@
 
   <script>
     $(document).ready(function() {
-      var eController = new EventsController(<%= @event.id %>);
-      eController.init();
+      var eController = new EventsController(<%= @event.id %>, <%= current_user == @event.owner %>);
 
-      var songs = <%= @songs.to_json({}).html_safe %>
-      eController.loadSongs(songs);
+      <% if current_user == @event.owner %>
+        eController.init();
 
-      $('a.song-link').first().click();
-      $("audio").trigger("pause");
+        var songs = <%= @songs.to_json({}).html_safe %>
+        eController.loadSongs(songs);
+
+        $('a.song-link').first().click();
+        $("audio").trigger("pause");
+
+      <% else %>
+        eController.initGuest();
+
+        var songs = <%= @songs.to_json({}).html_safe %>
+        eController.loadSongs(songs);
+
+        // socket.on('guestUpdatePlaylist', function(songId){
+        //   eController.ajaxUpdateCurrent(songId)
+        // });
+      <% end %>
+
 
       var playlistsController = new PlaylistsController(eController.playlist, eController.playlistView);
       playlistsController.init();
