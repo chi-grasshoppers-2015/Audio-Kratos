@@ -60,7 +60,11 @@ class EventsController < ApplicationController
     end
 
     if request.xhr?
-      render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false), :songs => @all_songs }
+      if current_user == @event.owner
+        render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false), :songs => @all_songs }
+      else
+        render :json => { :attachmentPartial => render_to_string('_event_guest_rows', :layout => false), :songs => @all_songs }
+      end
       # render partial: "event_rows"
     end
 

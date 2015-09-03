@@ -44,42 +44,45 @@
 
 
 
- <div class="col-md-12 mt">
-    <div class="content-panel">
-      <table class="table table-hover playlist-table">
-        <h4><%= @event.name.upcase %> PLAYLIST</h4>
-          <hr>
-            <thead>
-              <tr>
-                <th class="title col-md-1"></th>
-                <th class="title col-md-1"></th>
-                <th class="title col-md-1">Votes</th>
-                <th class="title col-md-3">Song</th>
-                <th class="title col-md-2">Artist</th>
-                <th class="title col-md-3">Album</th>
-              </tr>
-            </thead>
-            <tbody>
-               <%= render partial: "event_rows" %>
-            </tbody>
-    </table>
+   <div class="col-md-12 mt">
+      <div class="content-panel">
+        <table class="table table-hover playlist-table">
+          <h4><%= @event.name.upcase %> PLAYLIST</h4>
+            <hr>
+              <thead>
+                <tr>
+                  <th class="title col-md-1"></th>
+                  <th class="title col-md-1"></th>
+                  <th class="title col-md-1">Votes</th>
+                  <th class="title col-md-3">Song</th>
+                  <th class="title col-md-2">Artist</th>
+                  <th class="title col-md-3">Album</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% if current_user == @event.owner %>
+                 <%= render partial: "event_rows" %>
+              <% else %>
+                <%= render partial: "event_guest_rows" %>
+              <% end %>
+              </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
-<% if current_user == @event.owner %>
-<script>
-  $(document).ready(function() {
-    var eController = new EventsController(<%= @event.id %>);
-    eController.init();
 
-    var songs = <%= @songs.to_json({}).html_safe %>
-    eController.loadSongs(songs);
+  <script>
+    $(document).ready(function() {
+      var eController = new EventsController(<%= @event.id %>);
+      eController.init();
 
-    $('a.song-link').first().click();
-    $("audio").trigger("pause");
+      var songs = <%= @songs.to_json({}).html_safe %>
+      eController.loadSongs(songs);
 
-    var playlistsController = new PlaylistsController(eController.playlist, eController.playlistView);
-    playlistsController.init();
-  });
-</script>
-<% end %>
+      $('a.song-link').first().click();
+      $("audio").trigger("pause");
+
+      var playlistsController = new PlaylistsController(eController.playlist, eController.playlistView);
+      playlistsController.init();
+    });
+  </script>
