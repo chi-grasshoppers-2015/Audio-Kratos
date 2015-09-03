@@ -1,62 +1,39 @@
-<h1>Upload a file</h1>
+<h1>Upload A Song</h1>
 <%= form_tag songs_path, enctype: 'multipart/form-data' do %>
   <%= file_field_tag :file %>
   <%= submit_tag 'Upload file', class: "submitbutton" %>
 <% end %>
 
-<h1>All songs</h1>
-<table class="pretty">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Title</th>
-      <th>Artist</th>
-      <th>Album</th>
-      <th>Track</th>
-      <th>Genre</th>
-      <th>Delete</th>
-    </tr>
-  </thead>
+<div class="col-md-12 mt">
+    <div class="content-panel">
+      <table class="table table-hover playlist-table">
+        <h4>ALL SONGS PLAYLIST</h4>
+          <hr>
+            <thead>
+              <tr>
+                <th class="col-md-1">#</th>
+                <th class="col-md-2">Title</th>
+                <th class="col-md-2">Artist</th>
+                <th class="col-md-2">Album</th>
+                <th class="col-md-1">Track</th>
+                <th class="col-md-2">Genre</th>
+                <th class="col-md-2">Delete</th>
+              </tr>
+            </thead>
+          <tbody>
+            <% @songs.each_with_index do |song,i| %>
+               <tr>
+                <td class="col-md-1"><%= i + 1 %></td>
+                <td class="title col-md-3"><%= song.title %></td>
+                <td class="artist col-md-2"><%= song.artist %></td>
+                <td class="album col-md-3"><%= song.album %></td>
+                <td class="track col-md-1"><%= song.track %></td>
+                <td class="genre col-md-1"><%= song.genre %></td>
+                <th class="col-md-2"><%= button_to "Delete", song, method: :delete, class: "submitbutton" %></th>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  <tbody>
-  <% @songs.each_with_index do |song,i| %>
-    <tr>
-      <td><%= i+1 %></td>
-      <td><%= link_to song.title, song.s3_url, :class => "song-link", :data => {index: i} %></td>
-      <td><%= song.artist %></td>
-      <td><%= song.album %></td>
-      <td><%= song.track %></td>
-      <td><%= song.genre %></td>
-      <td><%= button_to "Delete", song, method: :delete, class: "submitbutton" %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
-
-
-<script>
-$(document).ready(function() {
-    controller = new Controller();
-    controller.init();
-
-    $('a.song-link').click(function() {
-
-      var currentSong = $(this);
-      var url = currentSong.attr('href');
-      var index = currentSong.attr('data-index');
-
-      controller.addAudioSrc(url);
-
-      $('audio').on('ended', function(){
-        console.log("made it into audio ended")
-        $("a[data-index="+(parseInt(index)+1)+"]").click();
-        $("audio").trigger("play");
-      })
-
-      return false;
-    });
-
-    $('a.song-link').first().click();
-
-});
-</script>

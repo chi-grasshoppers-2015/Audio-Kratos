@@ -10,6 +10,7 @@ $(function() {
       $('#sidebar').css({'margin-left': '-210px'});
       $('#container').addClass('sidebar-close');
       $('#sidebar > ul').hide();
+      $('ul.top-menu > li > a').hide();
     }
 
     if (wSize > 768) {
@@ -18,6 +19,7 @@ $(function() {
       $('#sidebar').css({'margin-left': '0'});
       $('#container').removeClass('sidebar-close');
       $('#sidebar > ul').show();
+      $('ul.top-menu > li > a').show();
     }
   }
 
