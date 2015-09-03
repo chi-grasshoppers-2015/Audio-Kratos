@@ -24,11 +24,12 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'aws-sdk'
 gem 'bcrypt'
-gem 'taglib-ruby', :require => 'taglib'
+gem 'id3tag'
 gem 'bootstrap-sass', '~> 3.3.5.1'
 gem 'autoprefixer-rails'
 gem 'jquery-ui-rails'
 gem 'amazon-album-art'
+gem 'rails_12factor', group: :production
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
