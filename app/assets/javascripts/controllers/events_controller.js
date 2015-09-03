@@ -1,7 +1,7 @@
 var EventsController = function (id, guestBoolean){
   this.eventId = id
   this.guest = guestBoolean
-  // this.socket = io.connect('audio-kratos-webserver.herokuapp.com')
+  this.socket = io.connect('localhost:3030')
 };
 
 EventsController.prototype = {
@@ -19,6 +19,7 @@ EventsController.prototype = {
     this.bindGuestEvents();
     this.playlist = new Playlist();
     this.playlistView = new PlaylistView();
+    this.ajaxUpdateCurrent();
   },
 
   bindEvents:
@@ -99,9 +100,10 @@ EventsController.prototype = {
         newSongOrder = response["songs"]
         self.loadSongs(newSongOrder);
 
-        if(self.guest == false){
-          console.log("hello")
+        if(self.guest != false){
           self.socket.emit('tellGuestsToUpdate', id);
+        } else {
+          self.playlistView.currentlyPlaying(newSongOrder[0]);
         }
       })
   },
@@ -131,8 +133,31 @@ EventsController.prototype = {
         $('tbody').html(response["attachmentPartial"])
         newSongOrder = response["songs"]
         self.loadSongs(newSongOrder);
+        self.socket.emit('tellAllToUpdate', self.eventId);
       })
   },
+
+  // updateAll:
+  //   function(id){
+  //     var token = $('meta[name="csrf-token"]').attr("content")
+  //     var url = "/events/" + id
+  //      var request = $.ajax({
+  //       // dataType: "json",
+  //       type: "PUT",
+  //       url: url,
+  //       headers: {
+  //         'X-CSRF-Token': token
+  //       }
+  //     })
+
+  //     var self = this;
+  //     request.done(function(response) {
+  //       $('tbody').html(response["attachmentPartial"])
+  //       newSongOrder = response["songs"]
+  //       self.loadSongs(newSongOrder);
+  //       self.playlistView.currentlyPlaying(newSongOrder[0]);
+  //     })
+  // },
 
   nextSong:
     function(event){

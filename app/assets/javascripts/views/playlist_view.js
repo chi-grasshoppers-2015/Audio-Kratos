@@ -9,7 +9,7 @@ PlaylistView.prototype = {
       $('.current-title').html(song.title);
       $('.current-artist').html(song.artist);
       $('.current-album').html(song.album);
-      $('.current-art').attr("src", song.art)
+      $('.current-art').attr("src", song.album_url)
   },
 
   removeRows:

@@ -48,24 +48,14 @@ class EventsController < ApplicationController
     @all_songs = @songs
     if current_user == @event.owner
       @event.assign_attributes(event_params)
-      if @event.save
-        # use the current song id from the event to find the current song
-        if @event.current_song
-          @current_song = @event.current_song
-          # subtract out the current song from the songs list
-          @songs = @songs - [@current_song]
-          @songs.shuffle!
-          @all_songs = [@current_song] + @songs
-        end
-      end
-    else
-      if @event.current_song
-        @current_song = @event.current_song
-        # subtract out the current song from the songs list
-        @songs = @songs - [@current_song]
-        @songs.shuffle!
-        @all_songs = [@current_song] + @songs
-      end
+      @event.save
+    end # use the current song id from the event to find the current song
+    if @event.current_song
+      @current_song = @event.current_song
+      # subtract out the current song from the songs list
+      @songs = @songs - [@current_song]
+      @songs.shuffle!
+      @all_songs = [@current_song] + @songs
     end
 
     if request.xhr?
@@ -82,7 +72,7 @@ class EventsController < ApplicationController
   def index
     if logged_in?
       @events = Event.all
-    end
+    end    
   end
 
   def destroy
@@ -97,7 +87,7 @@ class EventsController < ApplicationController
     end
 
   end
-
+  
   private
 
     def event_params
