@@ -85,7 +85,7 @@ class EventsController < ApplicationController
   end
 
   def tally
-    @event = Event.find(params[:id])
+    @event = Event.find(params[:event_id])
     @vote = Vote.new
     @songs = @event.songs
     @all_songs = @songs

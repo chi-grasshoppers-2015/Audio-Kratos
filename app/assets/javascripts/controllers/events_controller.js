@@ -140,7 +140,7 @@ EventsController.prototype = {
   updateAll:
     function(id){
       var token = $('meta[name="csrf-token"]').attr("content")
-      var url = "/tally"
+      var url = "/events/"+id+"/tally"
        var request = $.ajax({
         type: "GET",
         url: url,
