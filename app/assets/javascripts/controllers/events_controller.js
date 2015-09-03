@@ -99,7 +99,6 @@ EventsController.prototype = {
         $('tbody').html(response["attachmentPartial"])
         newSongOrder = response["songs"]
         self.loadSongs(newSongOrder);
-        console.log(newSongOrder[0])
 
         if(self.guest != false){
           self.socket.emit('tellGuestsToUpdate', id);
@@ -134,6 +133,29 @@ EventsController.prototype = {
         $('tbody').html(response["attachmentPartial"])
         newSongOrder = response["songs"]
         self.loadSongs(newSongOrder);
+        self.socket.emit('tellAllToUpdate', self.eventId);
+      })
+  },
+
+  updateAll:
+    function(id){
+      var token = $('meta[name="csrf-token"]').attr("content")
+      var url = "/events/" + id
+       var request = $.ajax({
+        // dataType: "json",
+        type: "PUT",
+        url: url,
+        headers: {
+          'X-CSRF-Token': token
+        }
+      })
+
+      var self = this;
+      request.done(function(response) {
+        $('tbody').html(response["attachmentPartial"])
+        newSongOrder = response["songs"]
+        self.loadSongs(newSongOrder);
+        self.playlistView.currentlyPlaying(newSongOrder[0]);
       })
   },
 

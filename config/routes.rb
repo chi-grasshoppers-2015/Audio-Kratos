@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy'
   get 'about' => 'pages#about'
 
+  get 'tally' => 'events#tally'
+
   resources :songs
   resources :users
   resources :sessions, only: [:new, :create]

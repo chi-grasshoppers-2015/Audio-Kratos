@@ -94,7 +94,9 @@
           eController.ajaxUpdateCurrent(songId)
         });
       <% end %>
-
+        eController.socket.on('updateSelf', function(eventId){
+          eController.updateAll(eventId)
+        })
 
       var playlistsController = new PlaylistsController(eController.playlist, eController.playlistView);
       playlistsController.init();

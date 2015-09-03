@@ -48,24 +48,14 @@ class EventsController < ApplicationController
     @all_songs = @songs
     if current_user == @event.owner
       @event.assign_attributes(event_params)
-      if @event.save
-        # use the current song id from the event to find the current song
-        if @event.current_song
-          @current_song = @event.current_song
-          # subtract out the current song from the songs list
-          @songs = @songs - [@current_song]
-          @songs.shuffle!
-          @all_songs = [@current_song] + @songs
-        end
-      end
-    else
-      if @event.current_song
-        @current_song = @event.current_song
-        # subtract out the current song from the songs list
-        @songs = @songs - [@current_song]
-        @songs.shuffle!
-        @all_songs = [@current_song] + @songs
-      end
+      @event.save
+    end # use the current song id from the event to find the current song
+    if @event.current_song
+      @current_song = @event.current_song
+      # subtract out the current song from the songs list
+      @songs = @songs - [@current_song]
+      @songs.shuffle!
+      @all_songs = [@current_song] + @songs
     end
 
     if request.xhr?
@@ -82,7 +72,7 @@ class EventsController < ApplicationController
   def index
     if logged_in?
       @events = Event.all
-    end
+    end    
   end
 
   def destroy
@@ -94,6 +84,24 @@ class EventsController < ApplicationController
       redirect_to events_path
     else
       render :text => "No event was found to delete!"
+    end
+
+  end
+
+  def tally
+    @event = Event.find(params[:id])
+    @vote = Vote.new
+    @songs = @event.songs
+    @all_songs = @songs
+  
+
+    if request.xhr?
+      if current_user == @event.owner
+        render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false)}
+      else
+        render :json => { :attachmentPartial => render_to_string('_event_guest_rows', :layout => false)}
+      end
+      # render partial: "event_rows"
     end
 
   end
