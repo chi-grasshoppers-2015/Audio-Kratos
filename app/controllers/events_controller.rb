@@ -87,25 +87,7 @@ class EventsController < ApplicationController
     end
 
   end
-
-  def tally
-    @event = Event.find(params[:id])
-    @vote = Vote.new
-    @songs = @event.songs
-    @all_songs = @songs
   
-
-    if request.xhr?
-      if current_user == @event.owner
-        render :json => { :attachmentPartial => render_to_string('_event_rows', :layout => false)}
-      else
-        render :json => { :attachmentPartial => render_to_string('_event_guest_rows', :layout => false)}
-      end
-      # render partial: "event_rows"
-    end
-
-  end
-
   private
 
     def event_params

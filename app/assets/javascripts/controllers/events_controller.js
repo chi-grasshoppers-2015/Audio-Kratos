@@ -137,27 +137,27 @@ EventsController.prototype = {
       })
   },
 
-  updateAll:
-    function(id){
-      var token = $('meta[name="csrf-token"]').attr("content")
-      var url = "/events/" + id
-       var request = $.ajax({
-        // dataType: "json",
-        type: "PUT",
-        url: url,
-        headers: {
-          'X-CSRF-Token': token
-        }
-      })
+  // updateAll:
+  //   function(id){
+  //     var token = $('meta[name="csrf-token"]').attr("content")
+  //     var url = "/events/" + id
+  //      var request = $.ajax({
+  //       // dataType: "json",
+  //       type: "PUT",
+  //       url: url,
+  //       headers: {
+  //         'X-CSRF-Token': token
+  //       }
+  //     })
 
-      var self = this;
-      request.done(function(response) {
-        $('tbody').html(response["attachmentPartial"])
-        newSongOrder = response["songs"]
-        self.loadSongs(newSongOrder);
-        self.playlistView.currentlyPlaying(newSongOrder[0]);
-      })
-  },
+  //     var self = this;
+  //     request.done(function(response) {
+  //       $('tbody').html(response["attachmentPartial"])
+  //       newSongOrder = response["songs"]
+  //       self.loadSongs(newSongOrder);
+  //       self.playlistView.currentlyPlaying(newSongOrder[0]);
+  //     })
+  // },
 
   nextSong:
     function(event){
