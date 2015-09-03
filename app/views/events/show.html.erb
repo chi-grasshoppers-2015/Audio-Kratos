@@ -90,9 +90,9 @@
         var songs = <%= @songs.to_json({}).html_safe %>
         eController.loadSongs(songs);
 
-        // socket.on('guestUpdatePlaylist', function(songId){
-        //   eController.ajaxUpdateCurrent(songId)
-        // });
+        eController.socket.on('guestUpdatePlaylist', function(songId){
+          eController.ajaxUpdateCurrent(songId)
+        });
       <% end %>
 
 

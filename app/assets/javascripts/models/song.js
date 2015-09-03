@@ -1,4 +1,4 @@
-var Song = function(id, url, title, artist, album, track, genre, art, netVotes){
+var Song = function(id, url, title, artist, album, track, genre, album_url, netVotes){
   this.id = id;
   this.url = url;
   this.title = title;
@@ -6,7 +6,7 @@ var Song = function(id, url, title, artist, album, track, genre, art, netVotes){
   this.album = album;
   this.track = track;
   this.genre = genre;
-  this.art = art;
+  this.album_url = album_url;
   this.netVotes = netVotes
 };
 

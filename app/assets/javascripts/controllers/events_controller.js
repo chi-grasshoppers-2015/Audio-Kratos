@@ -1,7 +1,7 @@
 var EventsController = function (id, guestBoolean){
   this.eventId = id
   this.guest = guestBoolean
-  // this.socket = io.connect('audio-kratos-webserver.herokuapp.com')
+  this.socket = io.connect('localhost:3030')
 };
 
 EventsController.prototype = {
@@ -19,6 +19,7 @@ EventsController.prototype = {
     this.bindGuestEvents();
     this.playlist = new Playlist();
     this.playlistView = new PlaylistView();
+    this.ajaxUpdateCurrent();
   },
 
   bindEvents:
@@ -98,10 +99,12 @@ EventsController.prototype = {
         $('tbody').html(response["attachmentPartial"])
         newSongOrder = response["songs"]
         self.loadSongs(newSongOrder);
+        console.log(newSongOrder[0])
 
-        if(self.guest == false){
-          console.log("hello")
+        if(self.guest != false){
           self.socket.emit('tellGuestsToUpdate', id);
+        } else {
+          self.playlistView.currentlyPlaying(newSongOrder[0]);
         }
       })
   },
