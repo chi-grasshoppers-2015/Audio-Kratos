@@ -1,12 +1,11 @@
-var EventsController = function (id, guestBoolean){
+var EventsController = function(id, guestBoolean){
   this.eventId = id
   this.guest = guestBoolean
   this.socket = io.connect('audio-kratos-websocket.herokuapp.com')
 };
 
 EventsController.prototype = {
-  init:
-    function() {
+  init: function() {
       this.canvas = new Canvas(this.minimizeDimensions());
       this.bindEvents();
       this.audio = new AudioPlayer();
@@ -15,15 +14,14 @@ EventsController.prototype = {
       setInterval(this.conduct.bind(this), 17)
   },
 
-  initGuest() {
+  initGuest: function() {
     this.bindGuestEvents();
     this.playlist = new Playlist();
     this.playlistView = new PlaylistView();
     this.ajaxUpdateCurrent();
   },
 
-  bindEvents:
-    function(){
+  bindEvents: function(){
       window.addEventListener('resize', this.resetCanvas.bind(this));
 
       $(document).on('mousemove', this.mouse);
