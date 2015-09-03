@@ -47,10 +47,12 @@ class EventsController < ApplicationController
     @vote = Vote.new
     @songs = @event.songs
     @all_songs = @songs
+
     if current_user == @event.owner
       @event.assign_attributes(event_params)
       @event.save
     end
+
     if @event.current_song
       @current_song = @event.current_song
 
@@ -60,10 +62,13 @@ class EventsController < ApplicationController
 
       @songs.sort! {|a,b| b.net_votes <=> a.net_votes}
 
+      if current_user == @event.owner
+        @all_songs.each { |song| song.votes.each {|vote| vote.destroy}}
+        @all_songs.each { |song| song.update_attributes(net_votes: 0)}
+      end
+
       @all_songs = [@current_song] + @songs
 
-      @all_songs.each { |song| song.votes.each {|vote| vote.destroy}}
-      @all_songs.each { |song| song.update_attributes(net_votes: 0)}
 
     end
 
