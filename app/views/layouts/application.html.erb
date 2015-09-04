@@ -64,7 +64,11 @@
               <ul class="sidebar-menu" id="nav-accordion">
                 <p class="centered">
                   <a href="profile.html">
-                    <%= image_tag("lincoln.png", size: "60x60", class: "img-circle") %>
+                    <% if logged_in? && current_user.first_name.upcase == "KENNETH" %>
+                      <%= image_tag("ken.png", size: "60x60", class: "img-circle") %>
+                    <% else %>
+                      <%= image_tag("lincoln.png", size: "60x60", class: "img-circle") %>
+                    <% end %>
                   </a>
                 </p>
                 <% if logged_in? %>
