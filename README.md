@@ -10,9 +10,12 @@ To see the site live, go [here](http://audio-kratos.herokuapp.com/ "Live Site")
 To see a video demonstrating site functionality, go [here](https://vimeo.com/138661118 "Vimeo")
 
 ###Features
-Guest voting functionality:
-![guest voting][vote]
-[vote]: (http://gfycat.com/FewEdibleKagu)
+As a user I can play music that I've uploaded to the cloud with 3 different visualizers:
+
+In an event, guests can vote on what song should play next with updates in real time:
+![guest voting](http://gfycat.com/FewEdibleKagu)
+
+The highest voted song plays next and the votes reset for the next voting cycle:
 
 
 
