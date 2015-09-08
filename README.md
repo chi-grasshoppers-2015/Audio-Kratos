@@ -13,9 +13,10 @@ Audio-Kratos was the culmination of 8 days of work, exploring new technologies o
 - Node.js and socket.io for an active websockets server to handle ajax requests, simulating real-time updating
 
 Creators:
+
 [Nick Kincaid](https://github.com/nbkincaid "Nick Kincaid") 
 
-[Spencer Rohand](https://github.com/spencerrohan "Spencer Rohan")
+[Spencer Rohan](https://github.com/spencerrohan "Spencer Rohan")
 
 [Kenneth Liu](https://github.com/ksliu25 "Kenneth Liu")
 
