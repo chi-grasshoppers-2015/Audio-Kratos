@@ -13,13 +13,19 @@ Audio-Kratos was the culmination of 8 days of work, exploring new technologies o
 - ID3 tagging to strip metadata from an uploaded song
 - Node.js and socket.io for an active websockets server to simulate real-time updating through ajax calls
 
-Creators:
+###Contact
 
-[Nick Kincaid](https://github.com/nbkincaid "Nick Kincaid") 
+##[Nick Kincaid](https://github.com/nbkincaid "Nick Kincaid") 
 
-[Spencer Rohan](https://github.com/spencerrohan "Spencer Rohan")
+nbkincaid@gmail.com
 
-[Kenneth Liu](https://github.com/ksliu25 "Kenneth Liu")
+##[Spencer Rohan](https://github.com/spencerrohan "Spencer Rohan")
+
+spencermrohan@gmail.com
+
+##[Kenneth Liu](https://github.com/ksliu25 "Kenneth Liu")
+
+ksliu25@gmail.com
 
 
 
