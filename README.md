@@ -2,9 +2,9 @@
 Audio-Kratos is a collaborative cloud-based music player.
 
 ###Live Site / Demonstration
-To see the live site, go [here](http://audio-kratos.herokuapp.com/ "here")
+To see the site live, go [here](http://audio-kratos.herokuapp.com/ "Live Site")
 
-To see a demo of the site in action, go here
+To see a video demonstrating site functionality, go [here](https://vimeo.com/138661118 "Vimeo")
 
 ###About
 Audio-Kratos was the culmination of 8 days of work in exploring the technologies behind music-streaming, storage, and interaction. The main novel feature of Audio-Kratos is the ability for guests to vote on songs they feel should play next, updating the playlist in real-time for all clients connected.
