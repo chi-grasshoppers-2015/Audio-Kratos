@@ -11,7 +11,8 @@ To see a video demonstrating site functionality, go [here](https://vimeo.com/138
 
 ###Features
 Guest voting functionality:
-![hello](http://giant.gfycat.com/FewEdibleKagu.gif)
+![guest voting][vote]
+[vote]: (http://gfycat.com/FewEdibleKagu)
 
 
 
