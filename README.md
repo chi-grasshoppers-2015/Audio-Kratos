@@ -2,7 +2,7 @@
 Audio-Kratos is a collaborative cloud-based music player.
 
 ###Live Site / Demonstration
-To see the live site, go [audio-kratos](http://audio-kratos.herokuapp.com/ "here")
+To see the live site, go [here](http://audio-kratos.herokuapp.com/ "here")
 To see a demo of the site in action, go here
 
 ###About
@@ -13,9 +13,11 @@ Audio-Kratos was the culmination of 8 days of work, exploring new technologies o
 - Node.js and socket.io for an active websockets server to handle ajax requests, simulating real-time updating
 
 Creators:
-[nick's github](https://github.com/nbkincaid "Nick Kincaid") 
-[spencer's github](https://github.com/spencerrohan "Spencer Rohan")
-[kenneth's github](https://github.com/ksliu25 "Kenneth Liu")
+[Nick Kincaid](https://github.com/nbkincaid "Nick Kincaid") 
+
+[Spencer Rohand](https://github.com/spencerrohan "Spencer Rohan")
+
+[Kenneth Liu](https://github.com/ksliu25 "Kenneth Liu")
 
 
 
