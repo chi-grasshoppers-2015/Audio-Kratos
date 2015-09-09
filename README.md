@@ -29,7 +29,7 @@ In our work we explored the following:
 - S3 Amazon API for content delivery and storage
 - Web Audio API to extract audio frequencies for visualization on canvas through javascript
 - ID3 tagging to strip metadata from an uploaded song
-- Node.js and socket.io for an active websockets server to simulate real-time updating through ajax calls
+- Node.js and socket.io for an active websockets server to simulate real-time updating through ajax calls. This is located [here](https://github.com/chi-grasshoppers-2015/Audio-Kratos-websocket)
 
 
 
